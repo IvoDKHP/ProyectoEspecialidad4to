@@ -6,25 +6,282 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>268</height>
+    <width>846</width>
+    <height>310</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="volver_boton">
     <property name="geometry">
      <rect>
-      <x>239</x>
-      <y>22</y>
-      <width>231</width>
-      <height>81</height>
+      <x>0</x>
+      <y>5</y>
+      <width>71</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
-     <string>VOLVER</string>
+     <string>Volver</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>37</y>
+      <width>841</width>
+      <height>199</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="SemanaLayout">
+     <item>
+      <layout class="QVBoxLayout" name="GeneralLayout">
+       <item>
+        <widget class="QLabel" name="cartel_general">
+         <property name="text">
+          <string>General</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="lm_grl"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="grl_tm1"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="grl_tm2"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="grl_tm3"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="grl_tm4"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="grl_tm5"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="LunesLayout">
+       <item>
+        <widget class="QLabel" name="cartel_lunes">
+         <property name="text">
+          <string>Lunes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="lm_lu"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="lu_tm1"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="lu_tm2"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="lu_tm3"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="lu_tm4"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="lu_tm5"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="MartesLayout">
+       <item>
+        <widget class="QLabel" name="cartel_martes">
+         <property name="text">
+          <string>Martes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="lm_mt"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mt_tm1"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mt_tm2"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mt_tm3"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mt_tm4"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mt_tm5"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="MiercolesLayout">
+       <item>
+        <widget class="QLabel" name="cartel_miercoles">
+         <property name="text">
+          <string>Miercoles</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="lm_mc"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mc_tm1"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mc_tm2"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mc_tm3"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mc_tm4"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="mc_tm5"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="JuevesLayout">
+       <item>
+        <widget class="QLabel" name="cartel_jueves">
+         <property name="text">
+          <string>Jueves</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="lm_jv"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="jv_tm1"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="jv_tm2"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="jv_tm3"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="jv_tm4"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="jv_tm"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="ViernesLayout">
+       <item>
+        <widget class="QLabel" name="cartel_viernes">
+         <property name="text">
+          <string>Viernes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="lm_vn"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="vn_tm1"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="vn_tm2"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="vn_tm3"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="vn_tm4"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="vn_tm5"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="SabadoLayout">
+       <item>
+        <widget class="QLabel" name="cartel_sabado">
+         <property name="text">
+          <string>Sabado</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="lm_sb"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="sb_tm1"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="sb_tm2"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="sb_tm3"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="sb_tm4"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="sb_tm5"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="DomingoLayout">
+       <item>
+        <widget class="QLabel" name="cartel_domingo">
+         <property name="text">
+          <string>Domingo</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="lm_dg"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="dg_tm1"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="dg_tm2"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="dg_tm3"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="dg_tm4"/>
+       </item>
+       <item>
+        <widget class="QTimeEdit" name="dg_tm5"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="enviar_boton">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>238</y>
+      <width>91</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Enviar</string>
     </property>
    </widget>
   </widget>
@@ -33,7 +290,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>846</width>
      <height>20</height>
     </rect>
    </property>
@@ -43,14 +300,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton</sender>
+   <sender>volver_boton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>volver()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>244</x>
-     <y>85</y>
+     <x>70</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
      <x>115</x>
@@ -58,8 +315,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>enviar_boton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>enviar_dato()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>780</x>
+     <y>275</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>641</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>volver()</slot>
+  <slot>enviar_dato()</slot>
  </slots>
 </ui>

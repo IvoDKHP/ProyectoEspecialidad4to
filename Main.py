@@ -1,31 +1,57 @@
 import sys
+
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtCore import pyqtSlot
 
-"""
-from Archivo convertido con pyside2-uic archivo.ui > interfaz.py
-import nombre de la clase del archivo convertido
-"""
-from Ui_menu import Ui_MainWindow
-from Ui_configuracion import Ui_MainWindow
+import Ui_menu
+import Ui_configuracion
+import Ui_estadisticas
 
-class MainWindow(QMainWindow):  #Clase MainWindow heredada de QMainWindow, que es una clase de PyQt para crear la ventana principal de la app.
-    def __init__(self): #constructor method. Se ejuecuta cuando la instancia de la clase es creada.
-        super().__init__() #llama al constructor de la clase QMainWindow, para inicializar las funcionalidades básicas de la ventana principal de la app.
-        self.ui = Ui_MainWindow() #crea una instancia de Ui_MainWindow class, la cual es la definición de la interfaz del usuario para la ventana principal.
-        self.ui.setupUi(self) #llama al método setupUi() de la instancia Ui_MainWindow, para setear los componenetes de la interfaz del usuario dentro de main window.
+class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
+    def __init__(self):  # Constructor
+        super().__init__()
+        self.ui_menu = Ui_menu.Ui_MainWindow()  # Main menu UI
+        self.ui_config = Ui_configuracion.Ui_MainWindow()  # Configuration UI
+        self.ui_estadistic = Ui_estadisticas.Ui_MainWindow()
+        self.setup_menu()
+        self.matriz_datos = []
 
-    def cambiarventana(self):
-        self.ui.pushButton.Ui_configuracion(Ui_MainWindow)
-        self.Ui_configuracion.show()
+    def setup_menu(self):
+        # Set up the main menu interface
+        self.ui_menu.setupUi(self)
+        # Connect button to configuration window function
+        self.ui_menu.pushButton.clicked.connect(self.show_config)
 
-    def volver(self):
-        self.Menu = Ui_MainWindow()
-        self.ui.pushButton.self.Menu.show()
-        self.Ui_menu.show()
+    def show_config(self):
+        # Set up the configuration interface and show it
+        self.ui_config.setupUi(self)
+        self.ui_config.volver_boton.clicked.connect(self.show_menu)
 
-if __name__ == "__main__": #checkea si el script está siendo ejecutado como el prog principal (no importado como un modulo).
-    app = QApplication(sys.argv)    # Crea un Qt widget, la cual va ser nuestra ventana.
-    window = MainWindow() #crea una intancia de MainWindow 
-    window.show()   # IMPORTANT!!!!! la ventanas estan ocultas por defecto.
-    sys.exit(app.exec_()) # Start the event loop.
+    def show_menu(self):
+        # Return to the main menu
+        self.setup_menu()
+
+    def show_estadistic(self):
+        # Return to the main menu
+        self.ui_estadistic.setupUi(self)
+        self.ui_estadistic.volver_boton.clicked.connect(self.show_menu)  
+
+    def enviar_dato(self):
+        # Obtener el valor del QSpinBox y añadirlo a la matriz
+        cg = self.ui_config 
+        self.matriz_datos = [
+                            [cg.lm_grl.value(), cg.lm_lu.value(), cg.lm_mt.value(), cg.lm_mc.value(), cg.lm_jv.value(), cg.lm_vn.value(), cg.lm_sb.value(), cg.lm_dg.value()], 
+                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())], 
+                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())],
+                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())],
+                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())],
+                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())]
+                            ] # dateTime()
+        
+        # Imprimir la matriz para verificar
+        print("Matriz de datos:", self.matriz_datos)
+
+if __name__ == "__main__":  # Entry point check
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()  # Show the main window
+    sys.exit(app.exec_())  # Start the application loop
