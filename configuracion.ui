@@ -178,7 +178,7 @@
         <widget class="QTimeEdit" name="jv_tm4"/>
        </item>
        <item>
-        <widget class="QTimeEdit" name="jv_tm"/>
+        <widget class="QTimeEdit" name="jv_tm5"/>
        </item>
       </layout>
      </item>

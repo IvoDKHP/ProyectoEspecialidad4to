@@ -1,6 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 import Ui_menu
 import Ui_configuracion
@@ -24,9 +25,36 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
     def show_config(self):
         # Set up the configuration interface and show it
         self.ui_config.setupUi(self)
-        self.ui_config.volver_boton.clicked.connect(self.show_menu)
-
-    def show_menu(self):
+        self.ui_config.volver_boton.clicked.connect(self.volver)
+    
+    def parametros_cf(self):
+        self.lm = [self.ui_config.lm_grl, self.ui_config.lm_lu, self.ui_config.lm_mt, self.ui_config.lm_mc, self.ui_config.lm_jv, self.ui_config.lm_vn, self.ui_config.lm_sb, self.ui_config.lm_dg]
+        for day in self.lm:
+            day.clear()  
+            day.setSpecialValueText("--")
+            day.setMinimum(-1)
+            day.setMaximum(10)
+            day.setValue(-1)
+        
+        self.tm =   [
+                        [self.ui_config.grl_tm1, self.ui_config.grl_tm2, self.ui_config.grl_tm3, self.ui_config.grl_tm4, self.ui_config.grl_tm5],
+                        [self.ui_config.lu_tm1, self.ui_config.lu_tm2, self.ui_config.lu_tm3, self.ui_config.lu_tm4, self.ui_config.lu_tm5],
+                        [self.ui_config.mt_tm1, self.ui_config.mt_tm2, self.ui_config.mt_tm3, self.ui_config.mt_tm4, self.ui_config.mt_tm5],
+                        [self.ui_config.mc_tm1, self.ui_config.mc_tm2, self.ui_config.mc_tm3, self.ui_config.mc_tm4, self.ui_config.mc_tm5],
+                        [self.ui_config.jv_tm1, self.ui_config.jv_tm2, self.ui_config.jv_tm3, self.ui_config.jv_tm4, self.ui_config.jv_tm5],
+                        [self.ui_config.vn_tm1, self.ui_config.vn_tm2, self.ui_config.vn_tm3, self.ui_config.vn_tm4, self.ui_config.vn_tm5],
+                        [self.ui_config.sb_tm1, self.ui_config.sb_tm2, self.ui_config.sb_tm3, self.ui_config.sb_tm4, self.ui_config.sb_tm5],
+                        [self.ui_config.dg_tm1, self.ui_config.dg_tm2, self.ui_config.dg_tm3, self.ui_config.dg_tm4, self.ui_config.dg_tm5]
+                    ]
+        
+        for dia in self.tm:
+            for horario in dia:
+                horario.clear()  
+                horario.setSpecialValueText("--:--:--")  
+                horario.setTimeRange(QtCore.QTime(0, 0, 0), QtCore.QTime(23, 59, 59))  
+                horario.setTime(QtCore.QTime())  
+        
+    def volver(self):
         # Return to the main menu
         self.setup_menu()
 
