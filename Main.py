@@ -22,17 +22,20 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_menu.setupUi(self)
         # Connect button to configuration window function
         self.ui_menu.pushButton.clicked.connect(self.show_config)
+        self.ui_menu.pushButton.clicked.connect(self.parametros_cf)
 
     def show_config(self):
         # Set up the configuration interface and show it
         self.ui_config.setupUi(self)
         self.ui_config.volver_boton.clicked.connect(self.volver)
+        self.matriz_datos = MainWindow.extraer_dato(ruta)
     
     def parametros_cf(self):
         self.lm = [self.ui_config.lm_grl, self.ui_config.lm_lu, self.ui_config.lm_mt, self.ui_config.lm_mc, self.ui_config.lm_jv, self.ui_config.lm_vn, self.ui_config.lm_sb, self.ui_config.lm_dg]
         for day in self.lm:
             day.clear()  
-            day.setSpecialValueText("--")
+            if day.value() == -1:
+                day.setSpecialValueText("--")
             day.setMinimum(-1)
             day.setMaximum(10)
             day.setValue(-1)
@@ -48,12 +51,20 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
                         [self.ui_config.dg_tm1, self.ui_config.dg_tm2, self.ui_config.dg_tm3, self.ui_config.dg_tm4, self.ui_config.dg_tm5]         #horarios domingo
                     ]
         
-        for dia in self.tm:
+        for dia in self.tm:  # `self.tm` es la lista de listas con los widgets de horarios
             for horario in dia:
-                horario.clear()  
-                horario.setSpecialValueText("--:--:--")  
-                horario.setTimeRange(QtCore.QTime(0, 0, 0), QtCore.QTime(23, 59, 59))  
-                horario.setTime(QtCore.QTime())  
+                horario.clear()  # Limpiamos cualquier texto anterior
+
+                # Verificamos si el horario actual es "0:0"
+                if horario.time().toString("H:m") == "0:0":
+                    # Si el valor es "0:0", mostramos un texto especial
+                    horario.setSpecialValueText("--:--:--")
+                else:
+                    # Configuramos el rango de tiempo permitido
+                    horario.setTimeRange(QtCore.QTime(0, 0, 0), QtCore.QTime(23, 59, 59))
+
+                    horario.setTime(QtCore.QTime())
+  
         
     def volver(self):
         # Return to the main menu
@@ -68,19 +79,43 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         # Obtener el valor del QSpinBox y añadirlo a la matriz
         cg = self.ui_config 
         self.matriz_datos = [
-                            [cg.lm_grl.value(), cg.lm_lu.value(), cg.lm_mt.value(), cg.lm_mc.value(), cg.lm_jv.value(), cg.lm_vn.value(), cg.lm_sb.value(), cg.lm_dg.value()], 
-                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())], 
-                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())],
-                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())],
-                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())],
-                            [str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute())]
-                            ] # dateTime()
+                                [cg.lm_grl.value(), cg.grl_tm1.time(), cg.grl_tm2.time(), cg.grl_tm3.time(), cg.grl_tm4.time(), cg.grl_tm5.time()],
+                                [cg.lm_lu.value(), cg.lu_tm1.time(), cg.lu_tm2.time(), cg.lu_tm3.time(), cg.lu_tm4.time(), cg.lu_tm5.time()],
+                                [cg.lm_mt.value(), cg.mt_tm1.time(), cg.mt_tm2.time(), cg.mt_tm3.time(), cg.mt_tm4.time(), cg.mt_tm5.time()],
+                                [cg.lm_mc.value(), cg.mc_tm1.time(), cg.mc_tm2.time(), cg.mc_tm3.time(), cg.mc_tm4.time(), cg.mc_tm5.time()],
+                                [cg.lm_jv.value(), cg.jv_tm1.time(), cg.jv_tm2.time(), cg.jv_tm3.time(), cg.jv_tm4.time(), cg.jv_tm5.time()],
+                                [cg.lm_vn.value(), cg.vn_tm1.time(), cg.vn_tm2.time(), cg.vn_tm3.time(), cg.vn_tm4.time(), cg.vn_tm5.time()],
+                                [cg.lm_sb.value(), cg.sb_tm1.time(), cg.sb_tm2.time(), cg.sb_tm3.time(), cg.sb_tm4.time(), cg.sb_tm5.time()],
+                                [cg.lm_dg.value(), cg.dg_tm1.time(), cg.dg_tm2.time(), cg.dg_tm3.time(), cg.dg_tm4.time(), cg.dg_tm5.time()]
+                            ]
+
+
         
         # Imprimir la matriz para verificar
         print("Matriz de datos:", self.matriz_datos)
+
+        self.datos = {
+            "matriz":self.matriz_datos
+        }
+
+        with open(ruta, "w", encoding="utf-8") as archivo:
+            json.dump(self.datos, archivo, indent=4, ensure_ascii=False)  # `ensure_ascii=False` para caracteres especiales
+    
+        print("Datos guardados en " , ruta)
+        
+        MainWindow.extraer_dato(ruta)
+
+    def extraer_dato(ruta):
+        with open(ruta, "r", encoding="utf-8") as dato:
+            objeto = json.load(dato)  # Carga el JSON como un diccionario
+            matriz = objeto.get("matriz")  # Obtén el valor asociado a la clave "matriz"
+        print(matriz)
+        return matriz
 
 if __name__ == "__main__":  # Entry point check
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()  # Show the main window
+    ruta = "data.json"
     sys.exit(app.exec_())  # Start the application loop
+    
