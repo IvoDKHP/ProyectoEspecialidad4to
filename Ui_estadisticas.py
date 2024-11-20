@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.volver_boton.clicked.connect(MainWindow.show_menu) # type: ignore
+        self.volver_boton.clicked.connect(MainWindow.volver) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
