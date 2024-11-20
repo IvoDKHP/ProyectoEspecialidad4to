@@ -7,52 +7,86 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>252</height>
+    <height>664</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>40</y>
-      <width>221</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Configuración</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>130</y>
-      <width>221</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Estadísticas</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>0</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Bienvenido </string>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QWidget" name="widget" native="true">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>801</width>
+         <height>421</height>
+        </rect>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>Graficos/1.jpg</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>190</y>
+         <width>291</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Estadísticas</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="config_boton">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>280</y>
+         <width>301</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Configuración</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>380</x>
+         <y>20</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bienvenido </string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -69,40 +103,40 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton</sender>
+   <sender>pushButton_2</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>ventanaconfiguracion()</slot>
+   <slot>show_estadistic()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>289</x>
-     <y>79</y>
+     <x>477</x>
+     <y>245</y>
     </hint>
     <hint type="destinationlabel">
-     <x>142</x>
-     <y>78</y>
+     <x>615</x>
+     <y>547</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>config_boton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>ventanaestadisticas()</slot>
+   <slot>show_config()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>347</x>
-     <y>146</y>
+     <x>399</x>
+     <y>320</y>
     </hint>
     <hint type="destinationlabel">
-     <x>157</x>
-     <y>167</y>
+     <x>404</x>
+     <y>555</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>ventanaconfiguracion()</slot>
-  <slot>ventanaestadisticas()</slot>
+  <slot>show_config()</slot>
+  <slot>show_estadistic()</slot>
  </slots>
 </ui>
