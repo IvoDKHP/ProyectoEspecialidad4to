@@ -17,12 +17,12 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 252)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(270, 40, 221, 71))
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(270, 130, 221, 71))
-        self.pushButton_2.setObjectName("pushButton_2")
+        self.config_boton = QtWidgets.QPushButton(self.centralwidget)
+        self.config_boton.setGeometry(QtCore.QRect(270, 40, 221, 71))
+        self.config_boton.setObjectName("pushButton")
+        self.estadistic_boton = QtWidgets.QPushButton(self.centralwidget)
+        self.estadistic_boton.setGeometry(QtCore.QRect(270, 130, 221, 71))
+        self.estadistic_boton.setObjectName("pushButton_2")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(350, 0, 71, 31))
         self.label.setObjectName("label")
@@ -36,13 +36,13 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.pushButton.clicked.connect(MainWindow.show_config) # type: ignore
-        self.pushButton_2.clicked.connect(MainWindow.show_estadistic) # type: ignore
+        self.config_boton.clicked.connect(MainWindow.show_config) # type: ignore
+        self.estadistic_boton.clicked.connect(MainWindow.show_estadistic) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "Configuración"))
-        self.pushButton_2.setText(_translate("MainWindow", "Estadísticas"))
+        self.config_boton.setText(_translate("MainWindow", "Configuración"))
+        self.estadistic_boton.setText(_translate("MainWindow", "Estadísticas"))
         self.label.setText(_translate("MainWindow", "Bienvenido "))
