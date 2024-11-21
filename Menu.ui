@@ -7,26 +7,29 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>664</height>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
      <widget class="QWidget" name="widget" native="true">
       <property name="autoFillBackground">
        <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(Graficos/1.jpg);</string>
       </property>
       <widget class="QLabel" name="label_2">
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>30</y>
+         <y>0</y>
          <width>801</width>
-         <height>421</height>
+         <height>501</height>
         </rect>
        </property>
        <property name="autoFillBackground">
@@ -45,12 +48,12 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="estadistic_boton">
        <property name="geometry">
         <rect>
-         <x>260</x>
-         <y>190</y>
-         <width>281</width>
+         <x>250</x>
+         <y>210</y>
+         <width>301</width>
          <height>71</height>
         </rect>
        </property>
@@ -69,9 +72,9 @@ QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más 
       <widget class="QPushButton" name="config_boton">
        <property name="geometry">
         <rect>
-         <x>260</x>
-         <y>280</y>
-         <width>281</width>
+         <x>250</x>
+         <y>310</y>
+         <width>301</width>
          <height>71</height>
         </rect>
        </property>
@@ -87,39 +90,15 @@ QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más 
         <string>Configuración</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label">
-       <property name="geometry">
-        <rect>
-         <x>380</x>
-         <y>20</y>
-         <width>71</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Bienvenido </string>
-       </property>
-      </widget>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>estadistic_boton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>show_estadistic()</slot>
