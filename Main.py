@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         # Connect button to configuration window function
         self.ui_menu.config_boton.clicked.connect(self.show_config)
         self.ui_menu.estadistic_boton.clicked.connect(self.show_estadistic)
-
+ 
     def show_config(self):
         # Set up the configuration interface and show it
         self.ui_config.setupUi(self)
