@@ -14,17 +14,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 517)
+        MainWindow.resize(800, 664)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName("gridLayout")
         self.widget = QtWidgets.QWidget(self.centralwidget)
         self.widget.setAutoFillBackground(True)
-        self.widget.setStyleSheet("background-image: url(Graficos/1.jpg);")
         self.widget.setObjectName("widget")
         self.label_2 = QtWidgets.QLabel(self.widget)
-        self.label_2.setGeometry(QtCore.QRect(0, 0, 801, 501))
+        self.label_2.setGeometry(QtCore.QRect(0, 30, 801, 421))
         self.label_2.setAutoFillBackground(True)
         self.label_2.setText("")
         self.label_2.setPixmap(QtGui.QPixmap("../Graficos/1.jpg"))
@@ -32,16 +31,16 @@ class Ui_MainWindow(object):
         self.label_2.setOpenExternalLinks(True)
         self.label_2.setObjectName("label_2")
         self.estadistic_boton = QtWidgets.QPushButton(self.widget)
-        self.estadistic_boton.setGeometry(QtCore.QRect(250, 210, 301, 71))
+        self.estadistic_boton.setGeometry(QtCore.QRect(260, 190, 281, 71))
         self.estadistic_boton.setStyleSheet("QPushButton {\n"
 "    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
 "    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
 "border rad\n"
 "}\n"
 "QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }")
-        self.estadistic_boton.setObjectName("estadistic_boton")
+        self.estadistic_boton.setObjectName("pushButton_2")
         self.config_boton = QtWidgets.QPushButton(self.widget)
-        self.config_boton.setGeometry(QtCore.QRect(250, 310, 301, 71))
+        self.config_boton.setGeometry(QtCore.QRect(260, 280, 281, 71))
         self.config_boton.setStyleSheet("QPushButton {\n"
 "    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
 "    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
@@ -49,8 +48,18 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }")
         self.config_boton.setObjectName("config_boton")
-        self.horizontalLayout.addWidget(self.widget)
+        self.label = QtWidgets.QLabel(self.widget)
+        self.label.setGeometry(QtCore.QRect(380, 20, 71, 31))
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.widget, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 20))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         self.estadistic_boton.clicked.connect(MainWindow.show_estadistic) # type: ignore
@@ -62,3 +71,4 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.estadistic_boton.setText(_translate("MainWindow", "Estadísticas"))
         self.config_boton.setText(_translate("MainWindow", "Configuración"))
+        self.label.setText(_translate("MainWindow", "Bienvenido "))
