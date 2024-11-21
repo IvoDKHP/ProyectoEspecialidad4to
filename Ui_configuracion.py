@@ -234,6 +234,7 @@ class Ui_MainWindow(object):
         self.volver_boton.clicked.connect(MainWindow.volver) # type: ignore
         self.enviar_boton.clicked.connect(MainWindow.enviar_dato) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
         MainWindow.parametros_cf()
 
     def retranslateUi(self, MainWindow):
