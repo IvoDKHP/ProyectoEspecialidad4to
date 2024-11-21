@@ -26,6 +26,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_menu.setupUi(self)
         # Connect button to configuration window function
         self.ui_menu.config_boton.clicked.connect(self.show_config)
+        self.ui_menu.estadistic_boton.clicked.connect(self.show_estadistic)
 
     def show_config(self):
         # Set up the configuration interface and show it
@@ -36,6 +37,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.matriz_datos = MainWindow.extraer_dato(ruta)
     
     def parametros_cf(self):
+        self.limites = MainWindow.extraer_limite(ruta2)
         self.lm = [self.ui_config.lm_grl, self.ui_config.lm_lu, self.ui_config.lm_mt, self.ui_config.lm_mc, self.ui_config.lm_jv, self.ui_config.lm_vn, self.ui_config.lm_sb, self.ui_config.lm_dg]
         for day_idx, day_widget in enumerate(self.lm):  # Usamos enumerate para obtener el índice y el widget
             day_widget.clear()
@@ -77,11 +79,23 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
     def show_estadistic(self):
         # Return to the main menu
         self.ui_estadistic.setupUi(self)
-        self.ui_estadistic.volver_boton.clicked.connect(self.volver)  
+        """self.ui_estadistic.volver_boton.clicked.connect(self.volver)""" 
+
+        self.grafica = Canvas_grafica()
+        self.grafica1 = Canvas_grafica2()
+        self.grafica2 = Canvas_grafica3()
+        self.grafica3 = Canvas_grafica4()
+
+        self.ui_estadistic.grafica_uno.addWidget(self.grafica)
+        self.ui_estadistic.grafica_dos.addWidget(self.grafica1)
+        self.ui_estadistic.grafica_tres.addWidget(self.grafica2)
+        self.ui_estadistic.grafica_cuatro.addWidget(self.grafica3)
 
     def enviar_dato(self):
         # Obtener el valor del QSpinBox y añadirlo a la matriz
         cg = self.ui_config 
+        self.limites = [cg.lm_grl.value(), cg.lm_lu.value(), cg.lm_mt.value(), cg.lm_mc.value(), cg.lm_jv.value(), cg.lm_vn.value(), cg.lm_sb.value(), cg.lm_dg.value()]
+
         self.matriz_datos = [
                                 [ str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.grl_tm2.time().hour()) +":"+ str(cg.grl_tm2.time().minute()), str(cg.grl_tm3.time().hour()) +":"+ str(cg.grl_tm3.time().minute()), str(cg.grl_tm4.time().hour()) +":"+ str(cg.grl_tm4.time().minute()), str(cg.grl_tm5.time().hour()) +":"+ str(cg.grl_tm5.time().minute()),],
                                 [ str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.lu_tm2.time().hour()) +":"+ str(cg.lu_tm2.time().minute()),str(cg.lu_tm3.time().hour()) +":"+ str(cg.lu_tm3.time().minute()), str(cg.lu_tm4.time().hour()) +":"+ str(cg.lu_tm4.time().minute()), str(cg.lu_tm5.time().hour()) +":"+ str(cg.lu_tm5.time().minute())],

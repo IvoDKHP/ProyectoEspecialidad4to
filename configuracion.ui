@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>846</width>
-    <height>310</height>
+    <height>291</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -178,7 +178,7 @@
         <widget class="QTimeEdit" name="jv_tm4"/>
        </item>
        <item>
-        <widget class="QTimeEdit" name="jv_tm5"/>
+        <widget class="QTimeEdit" name="jv_tm"/>
        </item>
       </layout>
      </item>
