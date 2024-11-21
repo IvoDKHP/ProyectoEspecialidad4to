@@ -37,10 +37,10 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
             day_widget.clear()
             day_widget.setMinimum(-1)
             day_widget.setMaximum(10)
-            valor = self.limites[day_idx]
-            day_widget.setValue(valor)
-            if valor == -1:
-                day_widget.setSpecialValueText("--")
+            self.valor = self.limites[day_idx]
+            day_widget.setValue(self.valor)
+            if self.valor == -1:
+                day_widget.setSpecialValueText("ilimitado")
                     
         self.tm =   [
                         [self.ui_config.grl_tm1, self.ui_config.grl_tm2, self.ui_config.grl_tm3, self.ui_config.grl_tm4, self.ui_config.grl_tm5],   #horarios generales
@@ -61,7 +61,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
                 self.valor = self.matriz_datos[dia_idx][hora_idx]
                 if self.valor == "0:0":
                     # Si el valor es "0:0", mostramos un texto especial
-                    hora_widget.setSpecialValueText("--:--:--")
+                    hora_widget.setSpecialValueText("--:--")
                 else:
                     # Configuramos el rango de tiempo permitido
                     hora_widget.setTime(QtCore.QTime(int(self.valor.split(":")[0]), int(self.valor.split(":")[1])))
@@ -79,6 +79,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         # Obtener el valor del QSpinBox y añadirlo a la matriz
         cg = self.ui_config 
         self.limites = [cg.lm_grl.value(), cg.lm_lu.value(), cg.lm_mt.value(), cg.lm_mc.value(), cg.lm_jv.value(), cg.lm_vn.value(), cg.lm_sb.value(), cg.lm_dg.value()]
+
         self.matriz_datos = [
                                 [ str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.grl_tm2.time().hour()) +":"+ str(cg.grl_tm2.time().minute()), str(cg.grl_tm3.time().hour()) +":"+ str(cg.grl_tm3.time().minute()), str(cg.grl_tm4.time().hour()) +":"+ str(cg.grl_tm4.time().minute()), str(cg.grl_tm5.time().hour()) +":"+ str(cg.grl_tm5.time().minute()),],
                                 [ str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.lu_tm2.time().hour()) +":"+ str(cg.lu_tm2.time().minute()),str(cg.lu_tm3.time().hour()) +":"+ str(cg.lu_tm3.time().minute()), str(cg.lu_tm4.time().hour()) +":"+ str(cg.lu_tm4.time().minute()), str(cg.lu_tm5.time().hour()) +":"+ str(cg.lu_tm5.time().minute())],
