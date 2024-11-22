@@ -409,10 +409,10 @@ QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más 
                  <widget class="QSpinBox" name="lm_mt"/>
                 </item>
                 <item>
-                 <widget class="QTimeEdit" name="mt_tm2"/>
+                 <widget class="QTimeEdit" name="mt_tm1"/>
                 </item>
                 <item>
-                 <widget class="QTimeEdit" name="mt_tm1"/>
+                 <widget class="QTimeEdit" name="mt_tm2"/>
                 </item>
                 <item>
                  <widget class="QTimeEdit" name="mt_tm3"/>

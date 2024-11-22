@@ -1,5 +1,7 @@
 import sys
 import json
+import serial
+from datetime import datetime
 import numpy as np
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -20,6 +22,8 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_config = Ui_configuracion.Ui_MainWindow()  # Configuration UI
         self.ui_estadistic = Ui_estadisticas.Ui_MainWindow()
         self.setup_menu()
+
+        self.showFullScreen()
 
     def setup_menu(self):
         # Set up the main menu interface
@@ -79,7 +83,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
     def show_estadistic(self):
         # Return to the main menu
         self.ui_estadistic.setupUi(self)
-        """self.ui_estadistic.volver_boton.clicked.connect(self.volver)""" 
+        self.ui_estadistic.boton_volver.clicked.connect(self.volver)
 
         self.grafica = Canvas_grafica()
         self.grafica1 = Canvas_grafica2()
@@ -91,21 +95,44 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_estadistic.grafica_tres.addWidget(self.grafica2)
         self.ui_estadistic.grafica_cuatro.addWidget(self.grafica3)
 
+        # Convertir los horarios en minutos y organizar los horarios
+    def convertir_a_minutos(self, hora_minuto):
+        self.hora, self.minuto = map(int, hora_minuto.split(":"))
+        return self.hora * 60 + self.minuto
+
+    def organizar_horarios(self, matriz):
+        nueva_matriz = []
+        for fila in matriz:
+            # Convertir cada elemento de la fila a minutos, excepto los "0:0"
+            self.horarios_en_minutos = [(horario, self.convertir_a_minutos(horario)) for horario in fila if horario != "0:0"]
+            # Ordenar los horarios de menor a mayor
+            self.horarios_en_minutos.sort(key=lambda x: x[1])
+            # Extraer los horarios ordenados
+            self.nueva_fila = [horario for horario, minutos in self.horarios_en_minutos]
+            # Agregar los "0:0" al final de la fila
+            self.nueva_fila += ["0:0"] * (len(fila) - len(self.nueva_fila))
+            self.nueva_matriz.append(self.nueva_fila)
+        return self.nueva_matriz
+
     def enviar_dato(self):
-        # Obtener el valor del QSpinBox y añadirlo a la matriz
+            # Obtener los valores de los horarios de los QTimeEdit
         cg = self.ui_config 
         self.limites = [cg.lm_grl.value(), cg.lm_lu.value(), cg.lm_mt.value(), cg.lm_mc.value(), cg.lm_jv.value(), cg.lm_vn.value(), cg.lm_sb.value(), cg.lm_dg.value()]
 
         self.matriz_datos = [
-                                [ str(cg.grl_tm1.time().hour()) +":"+ str(cg.grl_tm1.time().minute()), str(cg.grl_tm2.time().hour()) +":"+ str(cg.grl_tm2.time().minute()), str(cg.grl_tm3.time().hour()) +":"+ str(cg.grl_tm3.time().minute()), str(cg.grl_tm4.time().hour()) +":"+ str(cg.grl_tm4.time().minute()), str(cg.grl_tm5.time().hour()) +":"+ str(cg.grl_tm5.time().minute()),],
-                                [ str(cg.lu_tm1.time().hour()) +":"+ str(cg.lu_tm1.time().minute()), str(cg.lu_tm2.time().hour()) +":"+ str(cg.lu_tm2.time().minute()),str(cg.lu_tm3.time().hour()) +":"+ str(cg.lu_tm3.time().minute()), str(cg.lu_tm4.time().hour()) +":"+ str(cg.lu_tm4.time().minute()), str(cg.lu_tm5.time().hour()) +":"+ str(cg.lu_tm5.time().minute())],
-                                [ str(cg.mt_tm1.time().hour()) +":"+ str(cg.mt_tm1.time().minute()), str(cg.mt_tm2.time().hour()) +":"+ str(cg.mt_tm2.time().minute()), str(cg.mt_tm3.time().hour()) +":"+ str(cg.mt_tm3.time().minute()), str(cg.mt_tm4.time().hour()) +":"+ str(cg.mt_tm4.time().minute()),str(cg.mt_tm5.time().hour()) +":"+ str(cg.mt_tm5.time().minute())],
-                                [ str(cg.mc_tm1.time().hour()) +":"+ str(cg.mc_tm1.time().minute()), str(cg.mc_tm2.time().hour()) +":"+ str(cg.mc_tm2.time().minute()), str(cg.mc_tm3.time().hour()) +":"+ str(cg.mc_tm3.time().minute()), str(cg.mc_tm4.time().hour()) +":"+ str(cg.mc_tm4.time().minute()), str(cg.mc_tm5.time().hour()) +":"+ str(cg.mc_tm5.time().minute())],
-                                [ str(cg.jv_tm1.time().hour()) +":"+ str(cg.jv_tm1.time().minute()), str(cg.jv_tm2.time().hour()) +":"+ str(cg.jv_tm2.time().minute()), str(cg.jv_tm3.time().hour()) +":"+ str(cg.jv_tm3.time().minute()), str(cg.jv_tm4.time().hour()) +":"+ str(cg.jv_tm4.time().minute()), str(cg.jv_tm5.time().hour()) +":"+ str(cg.jv_tm5.time().minute())],
-                                [ str(cg.vn_tm1.time().hour()) +":"+ str(cg.vn_tm1.time().minute()), str(cg.vn_tm2.time().hour()) +":"+ str(cg.vn_tm2.time().minute()), str(cg.vn_tm3.time().hour()) +":"+ str(cg.vn_tm3.time().minute()), str(cg.vn_tm4.time().hour()) +":"+ str(cg.vn_tm4.time().minute()), str(cg.vn_tm5.time().hour()) +":"+ str(cg.vn_tm5.time().minute()),],
-                                [ str(cg.sb_tm1.time().hour()) +":"+ str(cg.sb_tm1.time().minute()), str(cg.sb_tm2.time().hour()) +":"+ str(cg.sb_tm2.time().minute()), str(cg.sb_tm3.time().hour()) +":"+ str(cg.sb_tm3.time().minute()), str(cg.sb_tm4.time().hour()) +":"+ str(cg.sb_tm4.time().minute()), str(cg.sb_tm5.time().hour()) +":"+ str(cg.sb_tm5.time().minute()),],
-                                [ str(cg.dg_tm1.time().hour()) +":"+ str(cg.dg_tm1.time().minute()), str(cg.dg_tm2.time().hour()) +":"+ str(cg.dg_tm2.time().minute()), str(cg.dg_tm3.time().hour()) +":"+ str(cg.dg_tm3.time().minute()), str(cg.dg_tm4.time().hour()) +":"+ str(cg.dg_tm4.time().minute()), str(cg.dg_tm5.time().hour()) +":"+ str(cg.dg_tm5.time().minute())]
-                            ]
+            [ str(cg.grl_tm1.time().hour()) + ":" + str(cg.grl_tm1.time().minute()), str(cg.grl_tm2.time().hour()) + ":" + str(cg.grl_tm2.time().minute()), str(cg.grl_tm3.time().hour()) + ":" + str(cg.grl_tm3.time().minute()), str(cg.grl_tm4.time().hour()) + ":" + str(cg.grl_tm4.time().minute()), str(cg.grl_tm5.time().hour()) + ":" + str(cg.grl_tm5.time().minute())],
+            [ str(cg.lu_tm1.time().hour()) + ":" + str(cg.lu_tm1.time().minute()), str(cg.lu_tm2.time().hour()) + ":" + str(cg.lu_tm2.time().minute()), str(cg.lu_tm3.time().hour()) + ":" + str(cg.lu_tm3.time().minute()), str(cg.lu_tm4.time().hour()) + ":" + str(cg.lu_tm4.time().minute()), str(cg.lu_tm5.time().hour()) + ":" + str(cg.lu_tm5.time().minute())],
+            [ str(cg.mt_tm1.time().hour()) + ":" + str(cg.mt_tm1.time().minute()), str(cg.mt_tm2.time().hour()) + ":" + str(cg.mt_tm2.time().minute()), str(cg.mt_tm3.time().hour()) + ":" + str(cg.mt_tm3.time().minute()), str(cg.mt_tm4.time().hour()) + ":" + str(cg.mt_tm4.time().minute()), str(cg.mt_tm5.time().hour()) + ":" + str(cg.mt_tm5.time().minute())],
+            [ str(cg.mc_tm1.time().hour()) + ":" + str(cg.mc_tm1.time().minute()), str(cg.mc_tm2.time().hour()) + ":" + str(cg.mc_tm2.time().minute()), str(cg.mc_tm3.time().hour()) + ":" + str(cg.mc_tm3.time().minute()), str(cg.mc_tm4.time().hour()) + ":" + str(cg.mc_tm4.time().minute()), str(cg.mc_tm5.time().hour()) + ":" + str(cg.mc_tm5.time().minute())],
+            [ str(cg.jv_tm1.time().hour()) + ":" + str(cg.jv_tm1.time().minute()), str(cg.jv_tm2.time().hour()) + ":" + str(cg.jv_tm2.time().minute()), str(cg.jv_tm3.time().hour()) + ":" + str(cg.jv_tm3.time().minute()), str(cg.jv_tm4.time().hour()) + ":" + str(cg.jv_tm4.time().minute()), str(cg.jv_tm5.time().hour()) + ":" + str(cg.jv_tm5.time().minute())],
+            [ str(cg.vn_tm1.time().hour()) + ":" + str(cg.vn_tm1.time().minute()), str(cg.vn_tm2.time().hour()) + ":" + str(cg.vn_tm2.time().minute()), str(cg.vn_tm3.time().hour()) + ":" + str(cg.vn_tm3.time().minute()), str(cg.vn_tm4.time().hour()) + ":" + str(cg.vn_tm4.time().minute()), str(cg.vn_tm5.time().hour()) + ":" + str(cg.vn_tm5.time().minute())],
+            [ str(cg.sb_tm1.time().hour()) + ":" + str(cg.sb_tm1.time().minute()), str(cg.sb_tm2.time().hour()) + ":" + str(cg.sb_tm2.time().minute()), str(cg.sb_tm3.time().hour()) + ":" + str(cg.sb_tm3.time().minute()), str(cg.sb_tm4.time().hour()) + ":" + str(cg.sb_tm4.time().minute()), str(cg.sb_tm5.time().hour()) + ":" + str(cg.sb_tm5.time().minute())],
+            [ str(cg.dg_tm1.time().hour()) + ":" + str(cg.dg_tm1.time().minute()), str(cg.dg_tm2.time().hour()) + ":" + str(cg.dg_tm2.time().minute()), str(cg.dg_tm3.time().hour()) + ":" + str(cg.dg_tm3.time().minute()), str(cg.dg_tm4.time().hour()) + ":" + str(cg.dg_tm4.time().minute()), str(cg.dg_tm5.time().hour()) + ":" + str(cg.dg_tm5.time().minute())]
+        ]
+
+        # Organizar los horarios
+        self.matriz_datos = self.organizar_horarios(self.matriz_datos)
+
 
         # Imprimir la matriz para verificar
         print("Matriz de datos:", self.matriz_datos)
@@ -122,7 +149,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
             
         with open(ruta2, "w", encoding="utf-8") as archivo:
             json.dump(self.limit, archivo, indent=4, ensure_ascii=False)  # `ensure_ascii=False` para caracteres especiales
-    
+
         print(f"Datos guardados en {ruta} y {ruta2}")
         MainWindow.extraer_dato(ruta)
 
@@ -179,16 +206,19 @@ class Canvas_grafica2(FigureCanvas):
 
 class Canvas_grafica3(FigureCanvas):
     def __init__(self, parent=None):     
-        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), 
-            sharey=True, facecolor='white')
-        super().__init__(self.fig) 
+        # Crear la figura y los ejes
+        self.fig, self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), sharey=True, facecolor='white')
+        super().__init__(self.fig)  # Inicializa el Canvas con la figura
 
-        self.fig.suptitle('Grafica de Datos',size=9)
+        # Título
+        self.fig.suptitle('Gráfica de Datos', size=9)
+
+        # Generar datos aleatorios
         np.random.seed(20)
         y = np.random.randn(150).cumsum()
 
-        self.ax = plt.axes()
-        plt.plot(y, color='magenta')
+        # Graficar los datos
+        self.ax.plot(y, color='magenta')  # Usar ax directamente
 
 
 class Canvas_grafica4(FigureCanvas):

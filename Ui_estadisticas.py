@@ -15,8 +15,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
- 
-
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(622, 497)
@@ -36,10 +34,10 @@ class Ui_MainWindow(object):
         self.frame_2 = QFrame(self.frame)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:20px;\n"
-"border: 2px solid #000000;\n"
-"}")
+                                   "background-color: rgb(255, 255, 255);\n"
+                                   "border-radius:20px;\n"
+                                   "border: 2px solid #000000;\n"
+                                   "}")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.frame_2)
@@ -47,9 +45,9 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.frame_2)
         self.label.setObjectName(u"label")
         self.label.setStyleSheet(u"QLabel{\n"
-"\n"
-"border: none;\n"
-"}")
+                                 "\n"
+                                 "border: none;\n"
+                                 "}")
         self.label.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_3.addWidget(self.label)
@@ -67,10 +65,10 @@ class Ui_MainWindow(object):
         self.frame_3 = QFrame(self.frame)
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:20px;\n"
-"border: 2px solid #000000;\n"
-"}")
+                                   "background-color: rgb(255, 255, 255);\n"
+                                   "border-radius:20px;\n"
+                                   "border: 2px solid #000000;\n"
+                                   "}")
         self.frame_3.setFrameShape(QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Raised)
         self.verticalLayout_4 = QVBoxLayout(self.frame_3)
@@ -78,9 +76,9 @@ class Ui_MainWindow(object):
         self.label_2 = QLabel(self.frame_3)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setStyleSheet(u"QLabel{\n"
-"\n"
-"border: none;\n"
-"}")
+                                   "\n"
+                                   "border: none;\n"
+                                   "}")
         self.label_2.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_4.addWidget(self.label_2)
@@ -98,10 +96,10 @@ class Ui_MainWindow(object):
         self.frame_4 = QFrame(self.frame)
         self.frame_4.setObjectName(u"frame_4")
         self.frame_4.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:20px;\n"
-"border: 2px solid #000000;\n"
-"}")
+                                   "background-color: rgb(255, 255, 255);\n"
+                                   "border-radius:20px;\n"
+                                   "border: 2px solid #000000;\n"
+                                   "}")
         self.frame_4.setFrameShape(QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QFrame.Raised)
         self.verticalLayout_6 = QVBoxLayout(self.frame_4)
@@ -109,9 +107,9 @@ class Ui_MainWindow(object):
         self.label_3 = QLabel(self.frame_4)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setStyleSheet(u"QLabel{\n"
-"\n"
-"border: none;\n"
-"}")
+                                   "\n"
+                                   "border: none;\n"
+                                   "}")
         self.label_3.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_6.addWidget(self.label_3)
@@ -129,10 +127,10 @@ class Ui_MainWindow(object):
         self.frame_5 = QFrame(self.frame)
         self.frame_5.setObjectName(u"frame_5")
         self.frame_5.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:20px;\n"
-"border: 2px solid #000000;\n"
-"}")
+                                   "background-color: rgb(255, 255, 255);\n"
+                                   "border-radius:20px;\n"
+                                   "border: 2px solid #000000;\n"
+                                   "}")
         self.frame_5.setFrameShape(QFrame.StyledPanel)
         self.frame_5.setFrameShadow(QFrame.Raised)
         self.verticalLayout_8 = QVBoxLayout(self.frame_5)
@@ -140,9 +138,9 @@ class Ui_MainWindow(object):
         self.label_4 = QLabel(self.frame_5)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setStyleSheet(u"QLabel{\n"
-"\n"
-"border: none;\n"
-"}")
+                                   "\n"
+                                   "border: none;\n"
+                                   "}")
         self.label_4.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_8.addWidget(self.label_4)
@@ -157,6 +155,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.frame_5, 1, 1, 1, 1)
 
+        # BOTÓN VOLVER
+        self.boton_volver = QPushButton(self.frame)
+        self.boton_volver.setObjectName(u"boton_volver")
+        self.boton_volver.setText("Volver")
+        self.gridLayout.addWidget(self.boton_volver, 2, 0, 1, 2, alignment=Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.frame)
 
@@ -168,11 +171,13 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        # En la clase Ui_MainWindow o donde estés usando el layout grafica_tres:
+        
+
 
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Graficas Matplotlib", None))
@@ -181,6 +186,5 @@ class Ui_MainWindow(object):
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Grafica N\u00b0 3", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Grafica N\u00b0 4", None))
 
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+    def setupConnections(self, MainWindow):
+        self.boton_volver.clicked.connect(MainWindow.volver)

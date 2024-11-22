@@ -60,7 +60,7 @@ class Ui_MainWindow(object):
         self.frame_4.setObjectName("frame_4")
         self.estadistic_boton = QtWidgets.QPushButton(self.frame_4)
         self.estadistic_boton.setEnabled(True)
-        self.estadistic_boton.setGeometry(QtCore.QRect(70, 135, 655, 130))
+        self.estadistic_boton.setGeometry(QtCore.QRect(70, 150, 655, 130))
         self.estadistic_boton.setStyleSheet("QPushButton {\n"
 "    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
 "    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
@@ -98,7 +98,7 @@ class Ui_MainWindow(object):
         self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_5.setObjectName("frame_5")
         self.config_boton = QtWidgets.QPushButton(self.frame_5)
-        self.config_boton.setGeometry(QtCore.QRect(26, 64, 650, 130))
+        self.config_boton.setGeometry(QtCore.QRect(26, 58, 650, 130))
         self.config_boton.setStyleSheet("QPushButton {\n"
 "    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
 "    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
