@@ -17,7 +17,7 @@ const int distanciaUmbral = 20;
 
 // Variables de control
 bool enEspera = false;    // Controla el tiempo de espera después de encender el motor
-int contador_sensor = 0; // contara cuantas veces se activa el sensor 
+int contador_sensor = 0;  // contador de activaciones del sensor 
 
 void setup() {
   // Configuración de pines
@@ -73,7 +73,11 @@ void loop() {
         noTone(parlante);           // Apagar el parlante
         delay(1000);                // Mantener el motor encendido 1 segundo
         digitalWrite(motorPin, HIGH); // Apagar el motor
-        contador_sensor += 1;
+        contador_sensor += 1;  // Incrementar el contador de activaciones
+
+        // Enviar el contador al monitor serie
+        Serial.print("Contador del sensor: ");
+        Serial.println(contador_sensor);
 
         // Entrar en estado de espera
         enEspera = true;
