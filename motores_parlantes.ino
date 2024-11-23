@@ -41,7 +41,7 @@ void setup() {
   inicio_millis = mensaje.toInt();  // Convertir el tiempo inicial a entero
 
   // Establece la hora objetivo (por ejemplo, 15:30:00 en milisegundos desde el día)
-  int hora_objetivo = 21;
+  int hora_objetivo = 2;
   int minuto_objetivo = 0;
   int segundo_objetivo = 0;
   tiempo_objetivo = (hora_objetivo * 3600000) + (minuto_objetivo * 60000) + (segundo_objetivo * 1000); 
@@ -51,13 +51,14 @@ void loop() {
   // Calcula el tiempo actual en milisegundos desde el inicio del día
   unsigned long tiempo_actual = millis() + inicio_millis;
 
+  // Verifica si está fuera del periodo restringido
   if (tiempo_actual < tiempo_objetivo - tiempo_restringuido || tiempo_actual >= tiempo_objetivo + tiempo_espera) {
     if (!enEspera) {
       // Enviar un pulso desde el pin Trig
       digitalWrite(trigPin, LOW);
       delayMicroseconds(2);
       digitalWrite(trigPin, HIGH);
-      delayMicroseconds(10); 
+      delayMicroseconds(10);
       digitalWrite(trigPin, LOW);
 
       // Leer el tiempo del pulso reflejado en el pin Echo
@@ -98,10 +99,15 @@ void loop() {
       delay(100);
     }
   } else {
-    // Apaga el motor y asegura que esté apagado
-    Serial.println("Tiempo límite alcanzado: Motor apagado.");
-    digitalWrite(motorPin, HIGH); // Asegura que el motor esté apagado
-    noTone(parlante);            // Apaga el parlante (por si está activo)
-    enEspera = true;             // Evita que vuelva a activarse
+    // Verifica si ya pasó el periodo de espera
+    if (tiempo_actual >= tiempo_objetivo + tiempo_espera) {
+      enEspera = false; // Reinicia el estado para permitir nuevas detecciones
+      Serial.println("Tiempo límite alcanzado: Sistema listo para reanudar.");
+    } else {
+      // Mantener en espera
+      Serial.println("Sistema en espera debido al periodo restringido.");
+      digitalWrite(motorPin, HIGH); // Asegura que el motor esté apagado
+      noTone(parlante);            // Apaga el parlante (por si está activo)
+    }
   }
 }
