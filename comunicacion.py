@@ -8,7 +8,7 @@ time.sleep(2)  # Espera 2 segundos para que Arduino se estabilice
 
 # Crear la matriz general con valores "hh:mm"
 general = [
-    "11:20",  # Primer valor
+    "14:12",  # Primer valor
     "0:0",  # Segundo valor
     "0:0",  # Tercer valor
     "0:0",  # Cuarto valor
