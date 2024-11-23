@@ -10,27 +10,38 @@ time.sleep(2)  # Espera 2 segundos para que Arduino se estabilice
 hora_actual = datetime.now()
 milisegundos_actuales = (hora_actual.hour * 3600000) + (hora_actual.minute * 60000) + (hora_actual.second * 1000) + (hora_actual.microsecond // 1000)
 
-# Definir la hora objetivo en milisegundos (ejemplo: 21:00:00)
-hora_objetivo = (3 * 3600000) + ( 54* 60000) + (0 * 1000)  # Cambiar según la necesidad
+# Establecer la hora objetivo en milisegundos (ejemplo: 15:30:00)
+hora_objetivo = 15
+minuto_objetivo = 30
+segundo_objetivo = 0
+milisegundos_objetivo = (hora_objetivo * 3600000) + (minuto_objetivo * 60000) + (segundo_objetivo * 1000)
 
-# Formatear y enviar el mensaje (hora_actual,hora_objetivo)
-mensaje = f"{milisegundos_actuales},{hora_objetivo}\n"
-arduino.write(mensaje.encode())
-print(f"Enviando datos al Arduino: {mensaje}")
+# Establecer el número máximo de activaciones del motor
+max_activaciones = 10  # Número máximo de veces que el motor puede girar
 
-# Leer el contador desde el Arduino
+# Crear un mensaje con los tres valores
+mensaje = f"{milisegundos_actuales},{milisegundos_objetivo},{max_activaciones}"
+
+# Intentar enviar los datos al Arduino
+try:
+    arduino.write(f"{mensaje}\n".encode())
+    print(f"Enviando datos: {mensaje}")
+except serial.SerialException as e:
+    print(f"Error al intentar enviar datos al Arduino: {e}")
+
+# Leer el contador enviado por Arduino
 while True:
-    if arduino.in_waiting > 0:
-        # Leer la línea enviada por el Arduino
-        respuesta = arduino.readline().decode('utf-8').strip()
-        
-        try:
-            # Convertir la respuesta en entero (contador del sensor)
-            contador = int(respuesta)
-            print(f"Contador del sensor: {contador}")
-        except ValueError:
-            print(f"Mensaje del arduino: {respuesta}")
-
-    time.sleep(1)  # Pequeño retraso para evitar saturación del puerto
+    try:
+        if arduino.in_waiting > 0:
+            mensaje = arduino.readline().decode('utf-8').strip()
+            
+            # Si el mensaje contiene el contador
+            if "Contador del sensor:" in mensaje:
+                contador = mensaje.split(":")[1].strip()
+                print(f"Contador del sensor: {contador}")
+    except serial.SerialException as e:
+        print(f"Error al leer datos del Arduino: {e}")
+    
+    time.sleep(1)
 
 arduino.close()
