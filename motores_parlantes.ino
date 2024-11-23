@@ -1,7 +1,7 @@
 // Variables globales
 unsigned long inicio_millis = 0;  // Tiempo inicial sincronizado
 unsigned long tiempo_espera = 3600000; // Tiempo de espera para volver a activar el sensor
-unsigned long tiempo_restringuido = 900000; // Tiempo de inactividad de los sensores
+unsigned long periodo_restringido = 900000; // Tiempo de inactividad de los sensores
 
 // Pines del HC-SR04
 const int trigPin = 10;   // Pin Trig del sensor
@@ -90,6 +90,18 @@ void loop() {
   // Calcula el tiempo actual en milisegundos desde el inicio del día
   unsigned long tiempo_actual = millis() + inicio_millis;
 
+  if ((tiempo_actual >= general_millis_1 - periodo_restringido && tiempo_actual < general_millis_1) ||
+      (tiempo_actual >= general_millis_2 - periodo_restringido && tiempo_actual < general_millis_2) ||
+      (tiempo_actual >= general_millis_3 - periodo_restringido && tiempo_actual < general_millis_3) ||
+      (tiempo_actual >= general_millis_4 - periodo_restringido && tiempo_actual < general_millis_4) ||
+      (tiempo_actual >= general_millis_5 - periodo_restringido && tiempo_actual < general_millis_5)) {
+    Serial.println("Tiempo restringido: El motor está apagado.");
+    digitalWrite(motorPin, HIGH); // Asegura que el motor esté apagado
+    noTone(parlante);             // Asegura que el parlante esté apagado
+    return;  // Salir de la función loop para evitar ejecutar el resto del código
+  }
+
+
   // Verificar si el tiempo actual coincide con los tiempos objetivos de la matriz general
   if (tiempo_actual >= general_millis_1 && tiempo_actual < general_millis_1 + 1000) {
     Serial.println("¡Hora objetivo 1 alcanzada! Activando el motor.");
@@ -169,7 +181,7 @@ void loop() {
   }
 
   // Verifica si está fuera del periodo restringido
-  if (tiempo_actual < general_millis_1 - tiempo_restringuido || tiempo_actual >= general_millis_5 + tiempo_espera) {
+  if (tiempo_actual < general_millis_1 - periodo_restringido || tiempo_actual >= general_millis_5 + tiempo_espera) {
     if (!enEspera) {
       // Verifica si no se ha alcanzado el máximo de activaciones
       if (contador_sensor < max_activaciones) {
