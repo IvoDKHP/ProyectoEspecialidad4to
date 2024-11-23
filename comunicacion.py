@@ -6,21 +6,33 @@ from datetime import datetime
 arduino = serial.Serial(port='COM3', baudrate=9600, timeout=1)  # Cambia COM3 por tu puerto
 time.sleep(2)  # Espera 2 segundos para que Arduino se estabilice
 
+# Crear la matriz general con valores "hh:mm"
+general = [
+    "11:20",  # Primer valor
+    "0:0",  # Segundo valor
+    "0:0",  # Tercer valor
+    "0:0",  # Cuarto valor
+    "0:0"   # Quinto valor
+]
+
+# Función para convertir hora:minuto a milisegundos
+def convertir_a_millis(hora_minuto):
+    horas, minutos = map(int, hora_minuto.split(":"))  # Separar y convertir a enteros
+    total_segundos = horas * 3600 + minutos * 60  # Calcular el total de segundos
+    return total_segundos * 1000  # Convertir a milisegundos
+
+# Convertir toda la matriz general y asignar valores a variables individuales
+general_millis = [convertir_a_millis(valor) for valor in general]
+
 # Obtener la hora actual en milisegundos desde el inicio del día
 hora_actual = datetime.now()
 milisegundos_actuales = (hora_actual.hour * 3600000) + (hora_actual.minute * 60000) + (hora_actual.second * 1000) + (hora_actual.microsecond // 1000)
 
-# Establecer la hora objetivo en milisegundos (ejemplo: 15:30:00)
-hora_objetivo = 15
-minuto_objetivo = 30
-segundo_objetivo = 0
-milisegundos_objetivo = (hora_objetivo * 3600000) + (minuto_objetivo * 60000) + (segundo_objetivo * 1000)
-
 # Establecer el número máximo de activaciones del motor
-max_activaciones = 10  # Número máximo de veces que el motor puede girar
+max_activaciones = 5  # Número máximo de veces que el motor puede girar
 
-# Crear un mensaje con los tres valores
-mensaje = f"{milisegundos_actuales},{milisegundos_objetivo},{max_activaciones}"
+# Crear un mensaje con los valores
+mensaje = f"{milisegundos_actuales},{max_activaciones}," + ",".join(map(str, general_millis))
 
 # Intentar enviar los datos al Arduino
 try:
