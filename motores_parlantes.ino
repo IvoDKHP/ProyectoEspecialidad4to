@@ -18,7 +18,7 @@ const int distanciaUmbral = 20;
 // Variables de control
 bool enEspera = false;    // Controla el tiempo de espera después de encender el motor
 int contador_sensor = 0;  // Contador de activaciones del sensor
-const int max_activaciones = 10; // Máximo de activaciones permitidas
+int max_activaciones = 0; // Máximo de activaciones permitidas
 
 void setup() {
   // Configuración de pines
@@ -35,22 +35,28 @@ void setup() {
   }
 
   // Leer los valores iniciales desde el puerto serie
-  Serial.println("Esperando valores de inicio y objetivo...");
+  Serial.println("Esperando valores de inicio, objetivo y máximo de activaciones...");
   while (Serial.available() == 0) {
     // Espera hasta que haya datos disponibles
   }
 
   // Leer el mensaje y dividir los valores recibidos
   String mensaje = Serial.readStringUntil('\n');
-  int separador = mensaje.indexOf(','); // Encuentra la posición de la coma
-  if (separador != -1) {
+  int separador1 = mensaje.indexOf(','); // Encuentra la primera coma
+  int separador2 = mensaje.indexOf(',', separador1 + 1); // Encuentra la segunda coma
+
+  if (separador1 != -1 && separador2 != -1) {
     // Extraer y convertir los valores
-    inicio_millis = mensaje.substring(0, separador).toInt();
-    tiempo_objetivo = mensaje.substring(separador + 1).toInt();
+    inicio_millis = mensaje.substring(0, separador1).toInt();
+    tiempo_objetivo = mensaje.substring(separador1 + 1, separador2).toInt();
+    max_activaciones = mensaje.substring(separador2 + 1).toInt();
+
     Serial.print("Inicio sincronizado: ");
     Serial.println(inicio_millis);
     Serial.print("Tiempo objetivo: ");
     Serial.println(tiempo_objetivo);
+    Serial.print("Máximo de activaciones: ");
+    Serial.println(max_activaciones);
   } else {
     Serial.println("Error: Formato inválido.");
   }
@@ -116,7 +122,7 @@ void loop() {
         } else {
           // No se detecta un objeto dentro del rango
           Serial.println("No se detecta objeto: Sonando parlante.");
-          digitalWrite(motorPin, HIGH); // Asegurar que el motor esté apagado
+          digitalWrite(motorPin, HIGH); // Asegura que el motor esté apagado
           tone(parlante, 1000);         // Sonar el parlante (1000 Hz)
           delay(500);                   // Sonar durante 500 ms
           noTone(parlante);             // Apagar el parlante
