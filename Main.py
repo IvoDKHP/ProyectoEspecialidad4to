@@ -13,14 +13,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 import Ui_menu
 import Ui_configuracion
-import Ui_estadisticas
+import Ui_estadisticas_1
 
 class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
     def __init__(self):  # Constructor
         super().__init__()
         self.ui_menu = Ui_menu.Ui_MainWindow()  # Main menu UI
         self.ui_config = Ui_configuracion.Ui_MainWindow()  # Configuration UI
-        self.ui_estadistic = Ui_estadisticas.Ui_MainWindow()
+        self.ui_estadistic = Ui_estadisticas_1.Ui_MainWindow()
         self.setup_menu()
 
         self.showFullScreen()
