@@ -1,12 +1,10 @@
 import sys
 import json
-import serial
 from datetime import datetime
-import numpy as np
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-import matplotlib.pyplot as plt
+from Graficos import*
+import config
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -27,19 +25,64 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
 
         self.showFullScreen() #Adapta a pantalla completa
 
-    
+    #Método que abre el Menu
     def setup_menu(self):
-        self.ui_menu.setupUi(self) #Funcion que abre el Menu
-
+        self.ui_menu.setupUi(self) 
         self.ui_menu.config_boton.clicked.connect(self.show_config) #Capta si el boton config fue presionado para ejecutar la funcion show_config
         self.ui_menu.estadistic_boton.clicked.connect(self.show_estadistic) #Capta si el boton estadistic fue presionado para ejecutar la funcion show_estadistic
- 
-    def show_config(self):
-        self.ui_config.setupUi(self) #Funcion que abre configuracion
 
+    #Muestra nuevamente el menu
+    def volver(self):
+        self.setup_menu() #vinculamos la funcion volver para que muestre el menu principal
+
+    #Método que abre Ui_configuracion.py
+    def show_config(self):
+        self.ui_config.setupUi(self) 
         self.ui_config.volver_boton.clicked.connect(self.volver) #Capta si el boton volver fue presionado para ejecutar la funcion volver
 
+    def enviar_dato(self):
+        cg = self.ui_config # Crea un enlace de facil acceso 
+        self.limites = [cg.lm_grl.value(), cg.lm_lu.value(), cg.lm_mt.value(), cg.lm_mc.value(), cg.lm_jv.value(), cg.lm_vn.value(), cg.lm_sb.value(), cg.lm_dg.value()]
 
+        self.matriz_datos = [
+                                [ str(cg.grl_tm1.time().hour()) + ":" + str(cg.grl_tm1.time().minute()), str(cg.grl_tm2.time().hour()) + ":" + str(cg.grl_tm2.time().minute()), str(cg.grl_tm3.time().hour()) + ":" + str(cg.grl_tm3.time().minute()), str(cg.grl_tm4.time().hour()) + ":" + str(cg.grl_tm4.time().minute()), str(cg.grl_tm5.time().hour()) + ":" + str(cg.grl_tm5.time().minute())],
+                                [ str(cg.lu_tm1.time().hour()) + ":" + str(cg.lu_tm1.time().minute()), str(cg.lu_tm2.time().hour()) + ":" + str(cg.lu_tm2.time().minute()), str(cg.lu_tm3.time().hour()) + ":" + str(cg.lu_tm3.time().minute()), str(cg.lu_tm4.time().hour()) + ":" + str(cg.lu_tm4.time().minute()), str(cg.lu_tm5.time().hour()) + ":" + str(cg.lu_tm5.time().minute())],
+                                [ str(cg.mt_tm1.time().hour()) + ":" + str(cg.mt_tm1.time().minute()), str(cg.mt_tm2.time().hour()) + ":" + str(cg.mt_tm2.time().minute()), str(cg.mt_tm3.time().hour()) + ":" + str(cg.mt_tm3.time().minute()), str(cg.mt_tm4.time().hour()) + ":" + str(cg.mt_tm4.time().minute()), str(cg.mt_tm5.time().hour()) + ":" + str(cg.mt_tm5.time().minute())],
+                                [ str(cg.mc_tm1.time().hour()) + ":" + str(cg.mc_tm1.time().minute()), str(cg.mc_tm2.time().hour()) + ":" + str(cg.mc_tm2.time().minute()), str(cg.mc_tm3.time().hour()) + ":" + str(cg.mc_tm3.time().minute()), str(cg.mc_tm4.time().hour()) + ":" + str(cg.mc_tm4.time().minute()), str(cg.mc_tm5.time().hour()) + ":" + str(cg.mc_tm5.time().minute())],
+                                [ str(cg.jv_tm1.time().hour()) + ":" + str(cg.jv_tm1.time().minute()), str(cg.jv_tm2.time().hour()) + ":" + str(cg.jv_tm2.time().minute()), str(cg.jv_tm3.time().hour()) + ":" + str(cg.jv_tm3.time().minute()), str(cg.jv_tm4.time().hour()) + ":" + str(cg.jv_tm4.time().minute()), str(cg.jv_tm5.time().hour()) + ":" + str(cg.jv_tm5.time().minute())],
+                                [ str(cg.vn_tm1.time().hour()) + ":" + str(cg.vn_tm1.time().minute()), str(cg.vn_tm2.time().hour()) + ":" + str(cg.vn_tm2.time().minute()), str(cg.vn_tm3.time().hour()) + ":" + str(cg.vn_tm3.time().minute()), str(cg.vn_tm4.time().hour()) + ":" + str(cg.vn_tm4.time().minute()), str(cg.vn_tm5.time().hour()) + ":" + str(cg.vn_tm5.time().minute())],
+                                [ str(cg.sb_tm1.time().hour()) + ":" + str(cg.sb_tm1.time().minute()), str(cg.sb_tm2.time().hour()) + ":" + str(cg.sb_tm2.time().minute()), str(cg.sb_tm3.time().hour()) + ":" + str(cg.sb_tm3.time().minute()), str(cg.sb_tm4.time().hour()) + ":" + str(cg.sb_tm4.time().minute()), str(cg.sb_tm5.time().hour()) + ":" + str(cg.sb_tm5.time().minute())],
+                                [ str(cg.dg_tm1.time().hour()) + ":" + str(cg.dg_tm1.time().minute()), str(cg.dg_tm2.time().hour()) + ":" + str(cg.dg_tm2.time().minute()), str(cg.dg_tm3.time().hour()) + ":" + str(cg.dg_tm3.time().minute()), str(cg.dg_tm4.time().hour()) + ":" + str(cg.dg_tm4.time().minute()), str(cg.dg_tm5.time().hour()) + ":" + str(cg.dg_tm5.time().minute())]
+                            ] # Matriz que guarda los datos de horarios en formato str
+
+        
+        self.matriz_datos = config.organizar_horarios(self.matriz_datos) # Organizar los horarios
+
+        print("Matriz de datos:", self.matriz_datos) # Imprimir la matriz para verificar
+
+        self.datos = {
+            "matriz":self.matriz_datos
+        } #Crea diccionario de la matriz
+        self.limit = {
+            "limite":self.limites
+        } #Crea diccionario del limite
+
+        with open(ruta, "w", encoding="utf-8") as archivo:
+            json.dump(self.datos, archivo, indent=4, ensure_ascii=False) #Ingresar diccionario de la matriz al horario.json
+            
+        with open(ruta2, "w", encoding="utf-8") as archivo:
+            json.dump(self.limit, archivo, indent=4, ensure_ascii=False)  #Ingresar diccionario del limite al limite.json
+
+        print(f"Datos guardados en {ruta} y {ruta2}") #Muestra los archivos donde se guarda los diccionarios
+
+    #Metodo que obtiene datos de los archivos .json
+    def extraer(ruta, indice): 
+        with open(ruta, "r", encoding="utf-8") as datos:
+            objeto = json.load(datos)  
+            dato = objeto.get(indice)  # Obtén el valor asociado a la clave 
+        return dato     # Retorna el valor obtenido
+    
+    #Otorga restricciones y parametros a Ui_configuracion.py
     def parametros_cf(self):
         self.matriz_datos = MainWindow.extraer(ruta, "matriz") #Actualiza la Matriz para mostrar los dotos del horario.json
         self.limites = MainWindow.extraer(ruta2, "limite") #Actualiza la Lista para mostrar los dotos del limites.json
@@ -81,11 +124,9 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
                 if self.valor == "0:0": #Comparamos si es 0:0 para asignar el texto "--:--"
                     hora.setSpecialValueText("--:--") 
                 else:
-                    hora.setTime(QtCore.QTime(int(self.valor.split(":")[0]), int(self.valor.split(":")[1]))) #Mostramos en el input el valor guardado en matriz_datos 
-        
-    def volver(self):
-        self.setup_menu() #vinculamos la funcion volver para que muestre el menu principal
+                    hora.setTime(QtCore.QTime(int(self.valor.split(":")[0]), int(self.valor.split(":")[1]))) #Mostramos en el input el valor guardado en matriz_datos
 
+    #Muestra Ui_estadisticas_1.py
     def show_estadistic(self):
         self.ui_estadistic.setupUi(self) #Abre la pagina estadisticas_1
         self.ui_estadistic.boton_volver.clicked.connect(self.volver) #Capta si el boton volver fue presionado para ejecutar la funcion volver
@@ -109,10 +150,9 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_estadistic.grafica_tres.addWidget(self.grafica2)
         self.ui_estadistic.grafica_cuatro.addWidget(self.grafica3)
     
-    def Buscar_dia(self):
-        pass
-
+    #Muestra Ui_estadisticas_2.py
     def show_estadistic_2(self):
+
         self.ui_estadistic_2.setupUi(self) #Abre la pagina estadisticas_2
         self.ui_estadistic_2.Volver_inicio.clicked.connect(self.volver) #Capta si el boton volver al inicio fue presionado para ejecutar la funcion volver
         self.ui_estadistic_2.Volver_estadistic.clicked.connect(self.show_estadistic) #Capta si el boton volver estadistic fue presionado para ejecutar la funcion show_estadistic
@@ -133,142 +173,18 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_estadistic_2.grafica_uno.addWidget(self.grafica)
         self.ui_estadistic_2.grafica_dos.addWidget(self.grafica1)
         self.ui_estadistic_2.grafica_cuatro.addWidget(self.grafica3)    
-
-    def organizar_horarios(self, matriz):
-        self.nueva_matriz = [] # Creamos la matriz que vamos a utilizar para devolver los datos ordenados 
-        for fila in matriz: 
-            self.horarios_validos = [] # Creamos la lista de horarios x dia    
-            for horario in fila:
-                if horario != "0:0": # Filtrar los horarios válidos (diferentes de "0:0") y convertirlos a minutos
-                    horas, minutos = map(int, horario.split(":"))
-                    minutos_totales = horas * 60 + minutos #Obtiene los minutos correspondientes al horario
-                    self.horarios_validos.append((horario, minutos_totales)) #Agregamos la tupla a la lista de horarios validos 
-            
-            for i in range(len(self.horarios_validos) - 1): #Ordenar los horarios válidos por minutos
-                for j in range(len(self.horarios_validos) - 1 - i): #Generar numero de pasadas necesarias para acomodar
-                    #Si el valor de la derecha es mayor que el izquierdo se intercambian
-                    if self.horarios_validos[j][1] > self.horarios_validos[j + 1][1]:
-                        self.horarios_validos[j], self.horarios_validos[j + 1] = self.horarios_validos[j + 1], self.horarios_validos[j] 
-
-            self.fila_ordenada = [] #Se crea la lista de horarios ordenados del dia
-            for horario, minutos in self.horarios_validos:
-                self.fila_ordenada.append(horario) #Agregar los horarios de forma ordenada a la lista
-
-            self.fila_ordenada += ["0:0"] * (len(fila) - len(self.fila_ordenada)) #Añade los "0:0" al final de la lista (compara cuantos son los faltantes)
-
-            self.nueva_matriz.append(self.fila_ordenada) #Agrega la lista ordenada a la nueva matriz
-
-        return self.nueva_matriz  # Devolver la nueva matriz ya ordenada
-
-    def enviar_dato(self):
-        cg = self.ui_config # Crea un enlace de facil acceso 
-        self.limites = [cg.lm_grl.value(), cg.lm_lu.value(), cg.lm_mt.value(), cg.lm_mc.value(), cg.lm_jv.value(), cg.lm_vn.value(), cg.lm_sb.value(), cg.lm_dg.value()]
-
-        self.matriz_datos = [
-                                [ str(cg.grl_tm1.time().hour()) + ":" + str(cg.grl_tm1.time().minute()), str(cg.grl_tm2.time().hour()) + ":" + str(cg.grl_tm2.time().minute()), str(cg.grl_tm3.time().hour()) + ":" + str(cg.grl_tm3.time().minute()), str(cg.grl_tm4.time().hour()) + ":" + str(cg.grl_tm4.time().minute()), str(cg.grl_tm5.time().hour()) + ":" + str(cg.grl_tm5.time().minute())],
-                                [ str(cg.lu_tm1.time().hour()) + ":" + str(cg.lu_tm1.time().minute()), str(cg.lu_tm2.time().hour()) + ":" + str(cg.lu_tm2.time().minute()), str(cg.lu_tm3.time().hour()) + ":" + str(cg.lu_tm3.time().minute()), str(cg.lu_tm4.time().hour()) + ":" + str(cg.lu_tm4.time().minute()), str(cg.lu_tm5.time().hour()) + ":" + str(cg.lu_tm5.time().minute())],
-                                [ str(cg.mt_tm1.time().hour()) + ":" + str(cg.mt_tm1.time().minute()), str(cg.mt_tm2.time().hour()) + ":" + str(cg.mt_tm2.time().minute()), str(cg.mt_tm3.time().hour()) + ":" + str(cg.mt_tm3.time().minute()), str(cg.mt_tm4.time().hour()) + ":" + str(cg.mt_tm4.time().minute()), str(cg.mt_tm5.time().hour()) + ":" + str(cg.mt_tm5.time().minute())],
-                                [ str(cg.mc_tm1.time().hour()) + ":" + str(cg.mc_tm1.time().minute()), str(cg.mc_tm2.time().hour()) + ":" + str(cg.mc_tm2.time().minute()), str(cg.mc_tm3.time().hour()) + ":" + str(cg.mc_tm3.time().minute()), str(cg.mc_tm4.time().hour()) + ":" + str(cg.mc_tm4.time().minute()), str(cg.mc_tm5.time().hour()) + ":" + str(cg.mc_tm5.time().minute())],
-                                [ str(cg.jv_tm1.time().hour()) + ":" + str(cg.jv_tm1.time().minute()), str(cg.jv_tm2.time().hour()) + ":" + str(cg.jv_tm2.time().minute()), str(cg.jv_tm3.time().hour()) + ":" + str(cg.jv_tm3.time().minute()), str(cg.jv_tm4.time().hour()) + ":" + str(cg.jv_tm4.time().minute()), str(cg.jv_tm5.time().hour()) + ":" + str(cg.jv_tm5.time().minute())],
-                                [ str(cg.vn_tm1.time().hour()) + ":" + str(cg.vn_tm1.time().minute()), str(cg.vn_tm2.time().hour()) + ":" + str(cg.vn_tm2.time().minute()), str(cg.vn_tm3.time().hour()) + ":" + str(cg.vn_tm3.time().minute()), str(cg.vn_tm4.time().hour()) + ":" + str(cg.vn_tm4.time().minute()), str(cg.vn_tm5.time().hour()) + ":" + str(cg.vn_tm5.time().minute())],
-                                [ str(cg.sb_tm1.time().hour()) + ":" + str(cg.sb_tm1.time().minute()), str(cg.sb_tm2.time().hour()) + ":" + str(cg.sb_tm2.time().minute()), str(cg.sb_tm3.time().hour()) + ":" + str(cg.sb_tm3.time().minute()), str(cg.sb_tm4.time().hour()) + ":" + str(cg.sb_tm4.time().minute()), str(cg.sb_tm5.time().hour()) + ":" + str(cg.sb_tm5.time().minute())],
-                                [ str(cg.dg_tm1.time().hour()) + ":" + str(cg.dg_tm1.time().minute()), str(cg.dg_tm2.time().hour()) + ":" + str(cg.dg_tm2.time().minute()), str(cg.dg_tm3.time().hour()) + ":" + str(cg.dg_tm3.time().minute()), str(cg.dg_tm4.time().hour()) + ":" + str(cg.dg_tm4.time().minute()), str(cg.dg_tm5.time().hour()) + ":" + str(cg.dg_tm5.time().minute())]
-                            ] # Matriz que guarda los datos de horarios en formato str
-
-        
-        self.matriz_datos = self.organizar_horarios(self.matriz_datos) # Organizar los horarios
-
-        
-        print("Matriz de datos:", self.matriz_datos) # Imprimir la matriz para verificar
-
-        self.datos = {
-            "matriz":self.matriz_datos
-        } #Crea diccionario de la matriz
-        self.limit = {
-            "limite":self.limites
-        } #Crea diccionario del limite
-
-        with open(ruta, "w", encoding="utf-8") as archivo:
-            json.dump(self.datos, archivo, indent=4, ensure_ascii=False) #Ingresar diccionario de la matriz al horario.json
-            
-        with open(ruta2, "w", encoding="utf-8") as archivo:
-            json.dump(self.limit, archivo, indent=4, ensure_ascii=False)  #Ingresar diccionario del limite al limite.json
-
-        print(f"Datos guardados en {ruta} y {ruta2}") #Muestra los archivos donde se guarda los diccionarios
-
-    def extraer( ruta, indice): #Metodo que obtiene 
-        with open(ruta, "r", encoding="utf-8") as datos:
-            objeto = json.load(datos)  
-            dato = objeto.get(indice)  # Obtén el valor asociado a la clave 
-        return dato     # Retorna el valor obtenido
     
-    class Dato_diario():
+    def Buscar_dia(self):
         pass
-        
-class Canvas_grafica(FigureCanvas):
-    def __init__(self, colores, nombres, tamaño, info, parent=None):
-        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), sharey=True, facecolor='white') 
-        super().__init__(self.fig) 
+    
 
-        #Pasa parametros a las variables
-        self.colores = colores 
-        self.nombres = nombres
-        self.tamaño = tamaño
-
-        self.fig.suptitle(info,size=9) #Coloca un titulo sobre el grafico
-        self.ax.bar(self.nombres, self.tamaño, color = self.colores) #Aplica los datos dados al grafico
-
-
-class Canvas_grafica2(FigureCanvas):
-    def __init__(self, nombres, colores, tamaño, explotar, info, parent=None):     
-        self.fig , self.ax = plt.subplots(1,dpi=100, figsize=(5, 5), sharey=True, facecolor='white')
-        super().__init__(self.fig) 
-
-        #Pasa parametros a las variables
-        self.nombres = nombres
-        self.colores = colores
-        self.tamaño = tamaño
-        self.explotar = explotar 
-
-        plt.title(info, color='black', size=9, family="DejaVu Sans") #Coloca un titulo sobre el grafico
-
-
-        self.ax.pie(self.tamaño, #Aplica % de cada parte
-                    explode = self.explotar, #coloca una distancia de sobresalido de las piezas del grafico
-                    labels = self.nombres, #Proporciona nombre a cada porcion
-                    colors = self.colores, #Proporciona color 
-                    autopct = '%1.0f%%', pctdistance = 0.6,
-                    shadow=True, startangle=90, radius = 0.8, #Sombra, radio, etc.
-                    labeldistance=1.1)  #Distancia del texto respecto la porcion
-        self.ax.axis('equal')
-
-class Canvas_grafica4(FigureCanvas):
-    def __init__(self, matriz, dato, color, info, parent=None):     
-        self.fig , self.ax = plt.subplots(1, dpi=100, figsize=(5, 5), sharey=True, facecolor='white')
-        super().__init__(self.fig) 
-
-        self.x  = matriz[0]
-        self.y1 = matriz[1]
-        self.y2 = matriz[2]
-        self.y3 = matriz[3]
-
-        self.y = np.vstack([self.y1, self.y2, self.y3])
-
-        self.labels = [dato[0], dato[1], dato[2]]
-        self.color = color
-
-        self.ax.stackplot(self.x, self.y1, self.y2, self.y3, labels=self.labels,colors=self.color)
-        self.ax.legend(loc='upper left')
-        self.ax.stackplot(self.x, self.y)
-        self.fig.suptitle(info,size=9)
-
-
-if __name__ == "__main__":  # Entry point check
+if __name__ == "__main__":  #Verifica si es el main
     app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()  # Show the main window
-    ruta = "horario.json"
+    window = MainWindow() #Se crea objeto de la clase MainWindow
+    window.show()  # Se muestra la ventana
+
+    #Se establecen rutas de acceso a los archivos ".json"
+    ruta = "horario.json" 
     ruta2 = "limite.json"
-    sys.exit(app.exec_())  # Start the application loop
-    
-    
+
+    sys.exit(app.exec_())

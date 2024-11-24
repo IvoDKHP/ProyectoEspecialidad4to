@@ -3,9 +3,10 @@ import time
 from datetime import datetime
 
 # Configura el puerto serie
-arduino = serial.Serial(port='COM3', baudrate=9600, timeout=1)  # Cambia COM3 por tu puerto
-time.sleep(2)  # Espera 2 segundos para que Arduino se estabilice
-
+def conexion_arduino():
+    arduino = serial.Serial(port='COM3', baudrate=9600, timeout=1)  # Cambia COM3 por tu puerto
+    time.sleep(2)  # Espera 2 segundos para que Arduino se estabilice
+    return arduino
 # Crear la matriz general con valores "hh:mm"
 general = [
     "14:12",  # Primer valor
@@ -15,11 +16,18 @@ general = [
     "0:0"   # Quinto valor
 ]
 
+
+class Dato_diario():
+    pass
+        
+
 # Función para convertir hora:minuto a milisegundos
 def convertir_a_millis(hora_minuto):
     horas, minutos = map(int, hora_minuto.split(":"))  # Separar y convertir a enteros
     total_segundos = horas * 3600 + minutos * 60  # Calcular el total de segundos
     return total_segundos * 1000  # Convertir a milisegundos
+
+arduino = conexion_arduino()
 
 # Convertir toda la matriz general y asignar valores a variables individuales
 general_millis = [convertir_a_millis(valor) for valor in general]
