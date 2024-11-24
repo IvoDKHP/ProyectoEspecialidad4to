@@ -1,18 +1,16 @@
 import sys
 import json
-from datetime import datetime
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import QtCore, QtGui, QtWidgets
-from Graficos import*
 import config
-
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import QtCore, QtGui, QtWidgets
-
 import Ui_menu
+import comunicacion
+from Graficos import*
 import Ui_configuracion
 import Ui_estadisticas_1
 import Ui_estadisticas_2
+from datetime import datetime
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
 
 class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
     def __init__(self):  # Constructor
@@ -24,6 +22,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.setup_menu() #Inicia la pagina Menu
 
         self.showFullScreen() #Adapta a pantalla completa
+        self.arduino = comunicacion.conexion_arduino()
 
     #Método que abre el Menu
     def setup_menu(self):
@@ -58,6 +57,8 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         
         self.matriz_datos = config.organizar_horarios(self.matriz_datos) # Organizar los horarios
 
+        self.general = comunicacion.convertir_matriz(self.matriz_datos)
+
         print("Matriz de datos:", self.matriz_datos) # Imprimir la matriz para verificar
 
         self.datos = {
@@ -74,6 +75,31 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
             json.dump(self.limit, archivo, indent=4, ensure_ascii=False)  #Ingresar diccionario del limite al limite.json
 
         print(f"Datos guardados en {ruta} y {ruta2}") #Muestra los archivos donde se guarda los diccionarios
+
+        self.mensaje = f"{comunicacion.miliseg_week()},{5}," + ",".join(map(str, comunicacion.convertir_matriz()))
+
+        # Intentar enviar los datos al Arduino
+        try:
+            self.arduino.write(f"{self.mensaje}\n".encode())
+            print(f"Enviando datos: {self.mensaje}")
+        except comunicacion.serial.SerialException as e:
+            print(f"Error al intentar enviar datos al Arduino: {e}")
+
+    """# Leer el contador enviado por Arduino
+        while True:
+            try:
+                if self.arduino.in_waiting > 0:
+                    mensaje = self.arduino.readline().decode('utf-8').strip()
+                    
+                    # Si el mensaje contiene el contador
+                    if "Contador del sensor:" in mensaje:
+                        contador = mensaje.split(":")[1].strip()
+                        print(f"Contador del sensor: {contador}")
+            except comunicacion.serial.SerialException as e:
+                print(f"Error al leer datos del Arduino: {e}")
+            
+            comunicacion.time.sleep(1)
+        self.arduino.close()"""
 
     #Metodo que obtiene datos de los archivos .json
     def extraer(ruta, indice): 
