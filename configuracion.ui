@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1268</width>
+    <height>591</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <widget class="QFrame" name="Fondo">
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+    background-image: url(../Graficos/2.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_10" stretch="15,15,70,15,25">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QFrame" name="Volver_frame">
+         <property name="styleSheet">
+          <string notr="true">QFrame {
+    background: transparent;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="12,25,75">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QFrame" name="Volver">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <widget class="QPushButton" name="volver_boton">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>3</y>
+               <width>280</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+    background-color: blue;  /* Cambia 'green' al color que prefieras */
+    color: white;  /* Cambia 'white' al color del texto que prefieras */
+border rad
+}
+QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }</string>
+             </property>
+             <property name="text">
+              <string>Volver</string>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <spacer name="Volver_espacio">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="Semana_frame">
+         <property name="styleSheet">
+          <string notr="true">QFrame {
+    background: transparent;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout" stretch="25,50,50,50,50,50,50,50,50,25">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QFrame" name="General_frame">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,6">
+             <item>
+              <widget class="QLabel" name="cartel_general">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>General</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="Horarios_general">
+               <property name="styleSheet">
+                <string notr="true">QFrame {
+    background: transparent;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QSpinBox" name="lm_grl">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="grl_tm1">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="grl_tm2"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="grl_tm3"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="grl_tm4"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="grl_tm5"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="Lunes_frame">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,6">
+             <item>
+              <widget class="QLabel" name="cartel_lunes">
+               <property name="text">
+                <string>Lunes</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="Horarios_lunes">
+               <property name="styleSheet">
+                <string notr="true">QFrame {
+    background: transparent;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_11">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QSpinBox" name="lm_lu"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="lu_tm1"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="lu_tm2"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="lu_tm3"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="lu_tm4"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="lu_tm5"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="Martes_frame">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,6">
+             <item>
+              <widget class="QLabel" name="cartel_martes">
+               <property name="text">
+                <string>Martes</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="Horarios_martes">
+               <property name="styleSheet">
+                <string notr="true">QFrame {
+    background: transparent;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_12">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QSpinBox" name="lm_mt"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mt_tm1"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mt_tm2"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mt_tm3"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mt_tm4"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mt_tm5"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="Miercoles_frame">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,6">
+             <item>
+              <widget class="QLabel" name="cartel_miercoles">
+               <property name="text">
+                <string>Miercoles</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="Horarios_miercoles">
+               <property name="styleSheet">
+                <string notr="true">QFrame {
+    background: transparent;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_13">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QSpinBox" name="lm_mc"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mc_tm1"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mc_tm2"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mc_tm3"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mc_tm4"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="mc_tm5"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="Jueves_frame">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6" stretch="1,6">
+             <item>
+              <widget class="QLabel" name="cartel_jueves">
+               <property name="text">
+                <string>Jueves</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="Horarios_jueves">
+               <property name="styleSheet">
+                <string notr="true">QFrame {
+    background: transparent;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_14">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QSpinBox" name="lm_jv"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="jv_tm1"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="jv_tm2"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="jv_tm3"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="jv_tm4"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="jv_tm5"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="Viernes_frame">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_7" stretch="1,6">
+             <item>
+              <widget class="QLabel" name="cartel_viernes">
+               <property name="text">
+                <string>Viernes</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="Horarios_viernes">
+               <property name="styleSheet">
+                <string notr="true">QFrame {
+    background: transparent;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_15">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QSpinBox" name="lm_vn"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="vn_tm1"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="vn_tm2"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="vn_tm3"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="vn_tm4"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="vn_tm5"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="Sabado_frame">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8" stretch="1,6">
+             <item>
+              <widget class="QLabel" name="cartel_sabado">
+               <property name="text">
+                <string>Sabado</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="Horario_sabado">
+               <property name="styleSheet">
+                <string notr="true">QFrame {
+    background: transparent;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_16">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QSpinBox" name="lm_sb"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="sb_tm1"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="sb_tm2"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="sb_tm3"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="sb_tm4"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="sb_tm5"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="Domingo_frame">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1,6">
+             <item>
+              <widget class="QLabel" name="cartel_domingo">
+               <property name="text">
+                <string>Domingo</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="Horarios_domingo">
+               <property name="styleSheet">
+                <string notr="true">QFrame {
+    background: transparent;
+}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_17">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QSpinBox" name="lm_dg"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="dg_tm1"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="dg_tm2"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="dg_tm3"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="dg_tm4"/>
+                </item>
+                <item>
+                 <widget class="QTimeEdit" name="dg_tm5"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="Enviar_frame">
+         <property name="styleSheet">
+          <string notr="true">QFrame {
+    background: transparent;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="75,25,6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="Enviar_espacio">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QFrame" name="Enviar">
+            <property name="styleSheet">
+             <string notr="true">QFrame {
+    background: transparent;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <widget class="QPushButton" name="enviar_boton">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>4</y>
+               <width>290</width>
+               <height>40</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+    background-color: blue;  /* Cambia 'green' al color que prefieras */
+    color: white;  /* Cambia 'white' al color del texto que prefieras */
+border rad
+}
+QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }</string>
+             </property>
+             <property name="text">
+              <string>Enviar</string>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>volver_boton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>volver()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>115</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enviar_boton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>enviar_dato()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>780</x>
+     <y>275</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>641</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>volver()</slot>
+  <slot>enviar_dato()</slot>
+ </slots>
+</ui>
