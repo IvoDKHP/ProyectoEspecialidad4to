@@ -14,42 +14,118 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 517)
+        MainWindow.resize(1247, 940)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.widget = QtWidgets.QWidget(self.centralwidget)
-        self.widget.setAutoFillBackground(True)
-        self.widget.setStyleSheet("background-image: url(Graficos/1.jpg);")
-        self.widget.setObjectName("widget")
-        self.label_2 = QtWidgets.QLabel(self.widget)
-        self.label_2.setGeometry(QtCore.QRect(0, 0, 801, 501))
-        self.label_2.setAutoFillBackground(True)
-        self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("../Graficos/1.jpg"))
-        self.label_2.setScaledContents(True)
-        self.label_2.setOpenExternalLinks(True)
-        self.label_2.setObjectName("label_2")
-        self.estadistic_boton = QtWidgets.QPushButton(self.widget)
-        self.estadistic_boton.setGeometry(QtCore.QRect(250, 210, 301, 71))
+        self.Fondo = QtWidgets.QFrame(self.centralwidget)
+        self.Fondo.setStyleSheet("QFrame {\n"
+"    background-image: url(../Graficos/1.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-color: transparent;\n"
+"}\n"
+"")
+        self.Fondo.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.Fondo.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.Fondo.setObjectName("Fondo")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.Fondo)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
+        self.Estadisticas_frame = QtWidgets.QFrame(self.Fondo)
+        self.Estadisticas_frame.setStyleSheet("QFrame {\n"
+"    background: transparent;\n"
+"}\n"
+"")
+        self.Estadisticas_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.Estadisticas_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.Estadisticas_frame.setObjectName("Estadisticas_frame")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.Estadisticas_frame)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        spacerItem1 = QtWidgets.QSpacerItem(347, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem1)
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.frame_4 = QtWidgets.QFrame(self.Estadisticas_frame)
+        self.frame_4.setStyleSheet("QFrame {\n"
+"    background: transparent;\n"
+"}\n"
+"")
+        self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_4.setObjectName("frame_4")
+        self.estadistic_boton = QtWidgets.QPushButton(self.frame_4)
+        self.estadistic_boton.setEnabled(True)
+        self.estadistic_boton.setGeometry(QtCore.QRect(40, 90, 655, 130))
         self.estadistic_boton.setStyleSheet("QPushButton {\n"
 "    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
 "    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
 "border rad\n"
 "}\n"
-"QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }")
+"QPushButton { border-radius: 60px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }")
         self.estadistic_boton.setObjectName("estadistic_boton")
-        self.config_boton = QtWidgets.QPushButton(self.widget)
-        self.config_boton.setGeometry(QtCore.QRect(250, 310, 301, 71))
+        self.verticalLayout_3.addWidget(self.frame_4)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_3)
+        spacerItem2 = QtWidgets.QSpacerItem(247, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem2)
+        self.horizontalLayout_2.setStretch(0, 10)
+        self.horizontalLayout_2.setStretch(1, 25)
+        self.horizontalLayout_2.setStretch(2, 10)
+        self.verticalLayout.addWidget(self.Estadisticas_frame)
+        self.Configuracion_frame = QtWidgets.QFrame(self.Fondo)
+        self.Configuracion_frame.setStyleSheet("QFrame {\n"
+"    background: transparent;\n"
+"}\n"
+"")
+        self.Configuracion_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.Configuracion_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.Configuracion_frame.setObjectName("Configuracion_frame")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.Configuracion_frame)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        spacerItem3 = QtWidgets.QSpacerItem(381, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem3)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.frame_5 = QtWidgets.QFrame(self.Configuracion_frame)
+        self.frame_5.setStyleSheet("QFrame {\n"
+"    background: transparent;\n"
+"}\n"
+"")
+        self.frame_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_5.setObjectName("frame_5")
+        self.config_boton = QtWidgets.QPushButton(self.frame_5)
+        self.config_boton.setGeometry(QtCore.QRect(48, 85, 650, 130))
         self.config_boton.setStyleSheet("QPushButton {\n"
 "    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
 "    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
 "border rad\n"
 "}\n"
-"QPushButton { border-radius: 15px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }")
+"QPushButton { border-radius: 60px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }")
         self.config_boton.setObjectName("config_boton")
-        self.horizontalLayout.addWidget(self.widget)
+        self.verticalLayout_2.addWidget(self.frame_5)
+        self.horizontalLayout_3.addLayout(self.verticalLayout_2)
+        spacerItem4 = QtWidgets.QSpacerItem(237, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem4)
+        self.horizontalLayout_3.setStretch(0, 10)
+        self.horizontalLayout_3.setStretch(1, 25)
+        self.horizontalLayout_3.setStretch(2, 10)
+        self.verticalLayout.addWidget(self.Configuracion_frame)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem5)
+        self.verticalLayout.setStretch(0, 5)
+        self.verticalLayout.setStretch(1, 5)
+        self.verticalLayout.setStretch(2, 5)
+        self.verticalLayout.setStretch(3, 2)
+        self.horizontalLayout.addWidget(self.Fondo)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
