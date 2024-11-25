@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.setup_menu() #Inicia la pagina Menu
 
         self.showFullScreen() #Adapta a pantalla completa
-        self.arduino = comunicacion.conexion_arduino()
+        #self.arduino = comunicacion.conexion_arduino()
 
     #Método que abre el Menu
     def setup_menu(self):
@@ -76,14 +76,15 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
 
         print(f"Datos guardados en {ruta} y {ruta2}") #Muestra los archivos donde se guarda los diccionarios
 
-        self.mensaje = f"{comunicacion.miliseg_week()},{5}," + ",".join(map(str, comunicacion.convertir_matriz()))
+        self.mensaje = f"{comunicacion.miliseg_week()},{5}," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos)))
 
-        # Intentar enviar los datos al Arduino
+        print(self.mensaje)
+        """# Intentar enviar los datos al Arduino
         try:
             self.arduino.write(f"{self.mensaje}\n".encode())
             print(f"Enviando datos: {self.mensaje}")
         except comunicacion.serial.SerialException as e:
-            print(f"Error al intentar enviar datos al Arduino: {e}")
+            print(f"Error al intentar enviar datos al Arduino: {e}")"""
 
     """# Leer el contador enviado por Arduino
         while True:
