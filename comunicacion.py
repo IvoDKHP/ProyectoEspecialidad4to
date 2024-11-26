@@ -28,6 +28,7 @@ def convertir_matriz(matriz):
                     lista_horarios.append(miliseg + plus_millis)
     return lista_horarios
 
+
 # Obtener la hora actual en milisegundos desde el inicio de la semana
 def miliseg_week():
     hora_actual = datetime.now()
