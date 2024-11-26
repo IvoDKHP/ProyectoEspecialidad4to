@@ -76,7 +76,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
 
         print(f"Datos guardados en {ruta} y {ruta2}") #Muestra los archivos donde se guarda los diccionarios
 
-        self.mensaje = f"{comunicacion.miliseg_week()},{5}," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos)))
+        self.mensaje = f"{comunicacion.miliseg_week()},{5}," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos, "limite")))
 
         print(self.mensaje)
         """# Intentar enviar los datos al Arduino
