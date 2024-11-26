@@ -57,8 +57,6 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         
         self.matriz_datos = config.organizar_horarios(self.matriz_datos) # Organizar los horarios
 
-        self.general = comunicacion.convertir_matriz(self.matriz_datos)
-
         print("Matriz de datos:", self.matriz_datos) # Imprimir la matriz para verificar
 
         self.datos = {

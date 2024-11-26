@@ -14,6 +14,8 @@ def organizar_horarios(matriz):
                 if horarios_validos[j][1] > horarios_validos[j + 1][1]:
                     horarios_validos[j], horarios_validos[j + 1] = horarios_validos[j + 1], horarios_validos[j] 
 
+        horarios_validos = list(set(horarios_validos))
+
         fila_ordenada = [] #Se crea la lista de horarios ordenados del dia
         for horario, minutos in horarios_validos:
             fila_ordenada.append(horario) #Agregar los horarios de forma ordenada a la lista
