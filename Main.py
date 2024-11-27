@@ -37,7 +37,8 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
 
     #Método que abre Ui_configuracion.py
     def show_config(self):
-        self.ui_config.setupUi(self) 
+        self.ui_config.setupUi(self)
+        self.parametros_cf()
         Graficos.plt.close("all")
         self.ui_config.volver_boton.clicked.connect(self.volver) #Capta si el boton volver fue presionado para ejecutar la funcion volver
 
@@ -59,7 +60,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         
         self.matriz_datos = config.organizar_horarios(self.matriz_datos) # Organizar los horarios
 
-        self.general = comunicacion.convertir_matriz(self.matriz_datos)
+        self.ard_lm = config.organizar_limites(self.limites)
 
         print("Matriz de datos:", self.matriz_datos) # Imprimir la matriz para verificar
 
@@ -77,8 +78,10 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
             json.dump(self.limit, archivo, indent=4, ensure_ascii=False)  #Ingresar diccionario del limite al limite.json
 
         print(f"Datos guardados en {ruta} y {ruta2}") #Muestra los archivos donde se guarda los diccionarios
+        self.lg_lm = str(len(comunicacion.convertir_matriz(self.matriz_datos, "limite")))
+        self.lg_hr = str(len(comunicacion.convertir_matriz(self.matriz_datos, "horarios")))
 
-        self.mensaje = f"{comunicacion.miliseg_week()},{5}," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos)))
+        self.mensaje = f"{comunicacion.miliseg_week()}, {self.lg_lm}, {self.lg_hr}" + ",".join(map(str, self.ard_lm)) + "," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos, "limite"))) + "," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos, "horarios")))
 
         print(self.mensaje)
         """# Intentar enviar los datos al Arduino
@@ -183,6 +186,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
     def show_estadistic_2(self):
 
         self.ui_estadistic_2.setupUi(self) #Abre la pagina estadisticas_2
+        self.parametros_estad2("1","2","3","4","5","6")
         self.ui_estadistic_2.Volver_inicio.clicked.connect(self.volver) #Capta si el boton volver al inicio fue presionado para ejecutar la funcion volver
         self.ui_estadistic_2.Volver_estadistic.clicked.connect(self.show_estadistic) #Capta si el boton volver estadistic fue presionado para ejecutar la funcion show_estadistic
         
@@ -201,10 +205,60 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         #Agrega a los layouts los graficos correspondientes
         self.ui_estadistic_2.grafica_uno.addWidget(self.grafica)
         self.ui_estadistic_2.grafica_dos.addWidget(self.grafica1)
-        self.ui_estadistic_2.grafica_cuatro.addWidget(self.grafica3)    
+        self.ui_estadistic_2.grafica_cuatro.addWidget(self.grafica3)   
+
+    def parametros_estad2(self, hr1, hr2, hr3, hr4, hr5, lm):
+        self.ui_estadistic_2.Horario_1.setText(hr1)
+        self.ui_estadistic_2.Horario_2.setText(hr2)
+        self.ui_estadistic_2.Horario_3.setText(hr3)
+        self.ui_estadistic_2.Horario_4.setText(hr4)
+        self.ui_estadistic_2.Horario_5.setText(hr5)
+        self.ui_estadistic_2.Limite.setText(lm)
+        
+
+
     
     def Buscar_dia(self):
-        pass
+        self.Fecha = (self.ui_estadistic_2.Fecha.date().toString("yyyy-MM-dd"))
+        print(self.Fecha.split("-"))
+
+class Day_report():
+    def __init__(self, horarios, limite, pedido, cantidad):
+        self.horarios = horarios
+        self.limite = limite
+        self.pedido = pedido
+        self.cantidad = cantidad
+        
+    def zn_horaria(self):
+        self.zn_hora = [0,0,0,0,0]
+        for i in self.horarios:
+            if i%86400000 < 18000000:
+                self.zn_hora[0] += 1
+            elif i%86400000 < 36000000:
+                self.zn_hora[1] += 1
+            elif i%86400000 < 50400000:
+                self.zn_hora[2] += 1
+            elif i%86400000 < 68400000:
+                self.zn_hora[3] += 1
+            else:
+                self.zn_hora[4] += 1
+        return self.zn_hora
+        
+    def Pedido_lim(self):
+        self.div = self.pedido / self.limite
+        if self.div > 1:
+            self.falta = self.pedido*100/self.limite
+            self.justo = 100 - self.falta 
+            self.x = -1
+        elif self.div < 1:
+            self.sobra = self.pedido*100/self.limite
+            self.justo = 100 - self.sobra
+            self.x = 1
+        else:
+            self.justo = 100
+            self.x = 0
+        self.porcent = [self.justo, self.falta, self.sobra, self.x]
+        
     
 
 if __name__ == "__main__":  #Verifica si es el main
