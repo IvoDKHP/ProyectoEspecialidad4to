@@ -23,6 +23,7 @@ int *horas_motor_sabado;
 int *horas_motor_domingo;
 int elementosActuales = 0;  // <-- Corregido el punto y coma
 int valor = 0;  // <-- Corregido el punto y coma
+int dia = 0
 
 // Pines del sensor 1
 const int trigPin1 = 10;
@@ -129,6 +130,9 @@ void enviar_senial1() {
   int distancia1 = duracion1 * 0.034 / 2;
   if (distancia1 > 0 && distancia1 <= distanciaUmbral) {
     prender_motor();
+    if (contador_sensor < limite[dia]) {
+          contador_sensor = contador_sensor + 1
+    }
   }
 }
 
@@ -154,7 +158,19 @@ void setup() {
   while (!Serial) {
     // Espera
   }
-
+  if (Serial.available() > 0) {
+    String mensaje = Serial.readString();  // Lee el mensaje completo
+     if (mensaje == "CONEXION") {
+        Serial.println(horas_motor_lunes);
+        Serial.println(horas_motor_martes);
+        Serial.println(horas_motor_miercoles);
+        Serial.println(horas_motor_jueves);
+        Serial.println(horas_motor_viernes);
+        Serial.println(horas_motor_sabado);
+        Serial.println(horas_motor_domingo);
+        Serial.println(contador_sensor);
+     }
+  }
   // Lee los primeros datos del serial
   if (Serial.available() >= 6) {  // Verifica que haya al menos 6 bytes disponibles
     hora_actual = Serial.parseInt();  // <-- Se corrigió la declaración de 'hora_actual'
@@ -201,6 +217,10 @@ void setup() {
 void loop() {
   while (comida) {
     enviar_senial2();
+    if (hora_actual = 86400000 * 7) {
+      millis_inicio = 0
+      hora_actual = 0
+    }
     if (hora_actual > on_off[iterame2]) {  // <-- Corregí el 'if'
       iterame2 = iterame2 + 1;
     } else if (hora_actual < on_off[iterame2]) {  // <-- Corregí el 'else if'
@@ -209,49 +229,56 @@ void loop() {
       }
     }
 
-    if(hora_actual < 86400000 * 7) {  // <-- Corregí la comparación con el número 86400000
+    if(hora_actual < 86400000 * 7 && hora_actual > 86400000 * 6) {  // <-- Corregí la comparación con el número 86400000
+      dia = dia + 1 
       if (horarios[iterame] < 86400000  * 7) {
         horarios[iterame] = valor;
         agregarValor_domingo(valor);  // <-- Corregí la llamada a la función
       }
     }
 
-    if(hora_actual < 86400000 * 6) {  // <-- Corregí la comparación con el número 86400000
+    if(hora_actual < 86400000 * 6 && hora_actual > 86400000 * 5) {  // <-- Corregí la comparación con el número 86400000
+      dia = dia + 1 
       if (horarios[iterame] < 86400000 * 6) {
         horarios[iterame] = valor;
         agregarValor_sabado(valor);  // <-- Corregí la llamada a la función
       }
     }
     
-    if(hora_actual < 86400000 * 5) {  // <-- Corregí la comparación con el número 86400000
+    if(hora_actual < 86400000 * 5 && hora_actual > 86400000 * 4) {  // <-- Corregí la comparación con el número 86400000
+      dia = dia + 1 
       if (horarios[iterame] < 86400000 * 5) {
         horarios[iterame] = valor;
         agregarValor_viernes(valor);  // <-- Corregí la llamada a la función
       }
     }
 
-    if(hora_actual < 86400000 * 4) {  // <-- Corregí la comparación con el número 86400000
+    if(hora_actual < 86400000 * 4 && hora_actual > 86400000 * 3) {  // <-- Corregí la comparación con el número 86400000
+      dia = dia + 1
       if (horarios[iterame] < 86400000 *4) {
         horarios[iterame] = valor;
         agregarValor_jueves(valor);  // <-- Corregí la llamada a la función
       }
     }
 
-    if(hora_actual < 86400000 * 3) {  // <-- Corregí la comparación con el número 86400000
+    if(hora_actual < 86400000 * 3 && hora_actual > 86400000 * 2) {  // <-- Corregí la comparación con el número 86400000
+      dia = dia + 1 
       if (horarios[iterame] < 86400000 * 3) {
         horarios[iterame] = valor;
         agregarValor_miercoles(valor);  // <-- Corregí la llamada a la función
       }
     }
 
-    if(hora_actual < 86400000 * 2) {  // <-- Corregí la comparación con el número 86400000
+    if(hora_actual < 86400000 * 2 && hora_actual > 86400000) { // <-- Corregí la comparación con el número 86400000
+      dia = dia + 1 
       if (horarios[iterame] < 86400000* 2) {
         horarios[iterame] = valor;
         agregarValor_martes(valor);  // <-- Corregí la llamada a la función
       }
     }
 
-    if(hora_actual < 86400000) {  // <-- Corregí la comparación con el número 86400000
+    if(hora_actual < 86400000) {
+      dia = 0  // <-- Corregí la comparación con el número 86400000
       if (horarios[iterame] < 86400000) {
         horarios[iterame] = valor;
         agregarValor_lunes(valor);  // <-- Corregí la llamada a la función
