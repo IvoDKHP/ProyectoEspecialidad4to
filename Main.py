@@ -20,6 +20,8 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_estadistic = Ui_estadisticas_1.Ui_MainWindow() #facilita la coneccion con Ui_estadisticas_1
         self.ui_estadistic_2 = Ui_estadisticas_2.Ui_MainWindow() #facilita la coneccion con Ui_estadisticas_2
         self.setup_menu() #Inicia la pagina Menu
+        self.dia1 = Day_report([3600000, 11820000, 38700000, 48180000, 71880000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
+
 
         self.showFullScreen() #Adapta a pantalla completa
         #self.arduino = comunicacion.conexion_arduino()
@@ -38,7 +40,6 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
     #Método que abre Ui_configuracion.py
     def show_config(self):
         self.ui_config.setupUi(self)
-        self.parametros_cf()
         Graficos.plt.close("all")
         self.ui_config.volver_boton.clicked.connect(self.volver) #Capta si el boton volver fue presionado para ejecutar la funcion volver
 
@@ -84,28 +85,16 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.mensaje = f"{comunicacion.miliseg_week()}, {self.lg_lm}, {self.lg_hr}" + ",".join(map(str, self.ard_lm)) + "," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos, "limite"))) + "," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos, "horarios")))
 
         print(self.mensaje)
-        """# Intentar enviar los datos al Arduino
-        try:
-            self.arduino.write(f"{self.mensaje}\n".encode())
-            print(f"Enviando datos: {self.mensaje}")
-        except comunicacion.serial.SerialException as e:
-            print(f"Error al intentar enviar datos al Arduino: {e}")"""
+        """
+        self.arduino.write(comunicacion.miliseg_week())
+        self.arduino.write((self.lg_lm))
+        self.arduino.write((self.lg_hr))
+        for value in comunicacion.convertir_matriz(self.matriz_datos, "limite"):
+            self.arduino.write(f"{value}".encode()+b"\n")
 
-    """# Leer el contador enviado por Arduino
-        while True:
-            try:
-                if self.arduino.in_waiting > 0:
-                    mensaje = self.arduino.readline().decode('utf-8').strip()
-                    
-                    # Si el mensaje contiene el contador
-                    if "Contador del sensor:" in mensaje:
-                        contador = mensaje.split(":")[1].strip()
-                        print(f"Contador del sensor: {contador}")
-            except comunicacion.serial.SerialException as e:
-                print(f"Error al leer datos del Arduino: {e}")
+        for value in comunicacion.convertir_matriz(self.matriz_datos, "horarios"):
+            self.arduino.write(f"{value}".encode()+b"\n")"""
             
-            comunicacion.time.sleep(1)
-        self.arduino.close()"""
 
     #Metodo que obtiene datos de los archivos .json
     def extraer(ruta, indice): 
@@ -166,15 +155,15 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
 
         self.matriz_grafico =   [
                                     [1, 2, 3, 4, 5, 6, 7], 
-                                    [1, 0, 1, 3, 2, 4, 3,],
-                                    [0, 2, 2, 3, 4, 6, 5,],
-                                    [3, 1, 3, 4, 2, 7, 6,]
+                                    [5, 4, 2, 3, 2, 7, 3,],
+                                    [10, 2, 9, 3, 4, 4, 5,],
+                                    [3, 1, 3, 8, 2, 7, 6,]
                                 ]
         #Crea los graficos a partir de las clases correspondientes.
-        self.grafica = Graficos.Canvas_grafica(['orange','yellow','green','blue', 'purple'], ['Madrugada', 'Mañana', 'Mediodia', 'Tarde','Noche'], [10, 15, 20, 25, 30], "Horarios de Actividad Promedio")
+        self.grafica = Graficos.Canvas_grafica(['orange','yellow','green','blue', 'purple'], ['Madrugada', 'Mañana', 'Mediodia', 'Tarde','Noche'], [28, 32, 2, 25, 13], "Horarios de Actividad Promedio")
         self.grafica1 = Graficos.Canvas_grafica2(['Sobra', 'Falta', 'Justo'], ['green','orange','aqua'], [20,26,54], [0.05, 0.10, 0.05], "Alimento para Pedir Promedio")
         self.grafica2 = Graficos.Canvas_grafica4(self.matriz_grafico, ["Comida Pedida ", "Comida Programada ", "Comida Habilitada "], ["orange","blue","green"], "Uso del Alimento Diario")
-        self.grafica3 = Graficos.Canvas_grafica(['pink','red','orange','brown', 'grey'], ["Horario 1", "Horario 2", "Horario 3", "Horario 4","Horario 5"], [10, 15, 20, 25, 30], "Horarios de Consumo Promedio")
+        self.grafica3 = Graficos.Canvas_grafica(['pink','red','orange','brown', 'grey'], ["Horario 1", "Horario 2", "Horario 3", "Horario 4","Horario 5"], [18, 15, 30, 15, 38], "Horarios de Consumo Promedio")
 
         # Agrega a cada layouts los graficos correspondientes
         self.ui_estadistic.grafica_uno.addWidget(self.grafica)
@@ -190,17 +179,12 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_estadistic_2.Volver_inicio.clicked.connect(self.volver) #Capta si el boton volver al inicio fue presionado para ejecutar la funcion volver
         self.ui_estadistic_2.Volver_estadistic.clicked.connect(self.show_estadistic) #Capta si el boton volver estadistic fue presionado para ejecutar la funcion show_estadistic
         
-        self.matriz_grafico_2 =   [
-                                    [1, 2, 3, 4, 5, 6, 7], 
-                                    [1, 0, 1, 3, 2, 4, 3,],
-                                    [0, 2, 2, 3, 4, 6, 5,],
-                                    [3, 1, 3, 4, 2, 7, 6,]
-                                ]
-        
+        self.lista = self.dia1.Pedido_lim()
+        self.lista.pop()
         #Crea los graficos a partir de las clases correspondientes.
-        self.grafica = Graficos.Canvas_grafica(['orange','yellow','green','blue', 'purple'], ['Madrugada', 'Mañana', 'Mediodia', 'Tarde','Noche'], [10, 15, 20, 25, 30], "Horarios de Actividad")
-        self.grafica1 = Graficos.Canvas_grafica2(['Sobra', 'Falta', 'Justo'], ['green','orange','aqua'], [20,26,54], [0.05, 0.10, 0.05], "Alimento para Pedir")
-        self.grafica3 = Graficos.Canvas_grafica4(self.matriz_grafico_2, ["Comida Pedida ", "Comida Programada ", "Comida Habilitada "] ,["orange","blue","green"], "hola")
+        self.grafica = Graficos.Canvas_grafica(['orange','yellow','green','blue', 'purple'], ['Madrugada', 'Mañana', 'Mediodia', 'Tarde','Noche'], self.dia1.zn_horaria(), "Horarios de Actividad")
+        self.grafica1 = Graficos.Canvas_grafica2(['Sobra', 'Falta', 'Justo'], ['green','orange','aqua'], self.lista, [0.05, 0.10, 0.05], "Alimento para Pedir")
+        self.grafica3 = Graficos.Canvas_grafica4(self.dia1.Disponible(), ["Comida Pedida ", "Comida Programada ", "Comida Habilitada "] ,["orange","blue","green"], "hola")
 
         #Agrega a los layouts los graficos correspondientes
         self.ui_estadistic_2.grafica_uno.addWidget(self.grafica)
@@ -220,7 +204,11 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
     
     def Buscar_dia(self):
         self.Fecha = (self.ui_estadistic_2.Fecha.date().toString("yyyy-MM-dd"))
-        print(self.Fecha.split("-"))
+        try:
+            self.Fecha
+        except:
+            pass
+
 
 class Day_report():
     def __init__(self, horarios, limite, pedido, cantidad):
@@ -231,7 +219,7 @@ class Day_report():
         
     def zn_horaria(self):
         self.zn_hora = [0,0,0,0,0]
-        for i in self.horarios:
+        for i in self.pedido:
             if i%86400000 < 18000000:
                 self.zn_hora[0] += 1
             elif i%86400000 < 36000000:
@@ -245,21 +233,58 @@ class Day_report():
         return self.zn_hora
         
     def Pedido_lim(self):
-        self.div = self.pedido / self.limite
+        self.falta = 0
+        self.justo = 0
+        self.sobra = 0
+        self.div = self.cantidad / self.limite
         if self.div > 1:
-            self.falta = self.pedido*100/self.limite
+            self.falta = self.cantidad*100/self.limite
             self.justo = 100 - self.falta 
             self.x = -1
         elif self.div < 1:
-            self.sobra = self.pedido*100/self.limite
+            self.sobra = self.cantidad*100/self.limite
             self.justo = 100 - self.sobra
             self.x = 1
         else:
             self.justo = 100
             self.x = 0
         self.porcent = [self.justo, self.falta, self.sobra, self.x]
+        return self.porcent
+
+    def Disponible(self):
+        self.habilitado = []
+        for i in range(7):
+            self.habilitado.append(self.limite + len(self.horarios))
+        self.utilizado = []
+        if self.limite - self.cantidad > 0:
+            for i in range(7):
+                if self.cantidad > sum(self.utilizado) and i != 7:
+                    self.utilizado.append(1)
+                elif i == 7:
+                    self.utilizado.append(self.cantidad - sum(self.utilizado))
+        elif self.limite - self.cantidad < 0:
+            for i in range(7):
+                if self.limite > sum(self.utilizado) and i != 7:
+                    self.utilizado.append(1)
+                elif i == 7:
+                    self.utilizado.append(self.limite - sum(self.utilizado))
+        else:
+            for i in range(7):
+                if self.limite > sum(self.utilizado) and i != 7:
+                    self.utilizado.append(1)
+                elif i == 7:
+                    self.utilizado.append(self.limite - sum(self.utilizado))
         
-    
+        self.utilizado.append(self.limite - self.cantidad)
+        self.necesitado = []
+        self.necesitado = self.zn_horaria()
+        self.necesitado.append(0)
+        self.necesitado.append(0)
+        self.matriz = [ [1,2,3,4,5,6,7],
+                        self.utilizado,
+                        self.necesitado,
+                        self.habilitado ]
+        return self.matriz
 
 if __name__ == "__main__":  #Verifica si es el main
     app = QApplication(sys.argv)

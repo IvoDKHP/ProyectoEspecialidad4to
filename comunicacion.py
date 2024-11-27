@@ -4,8 +4,9 @@ from datetime import datetime
 
 # Configura el puerto serie
 def conexion_arduino():
-    arduino = serial.Serial(port='COM3', baudrate=9600, timeout=1)  # Cambia COM3 por tu puerto
+    arduino = serial.Serial(port='COM4', baudrate=9600, timeout=1)  # Cambia COM3 por tu puerto
     time.sleep(2)  # Espera 2 segundos para que Arduino se estabilice
+    arduino.write("CONECTADO")
     return arduino
 
 # Función para convertir hora:minuto a milisegundos
