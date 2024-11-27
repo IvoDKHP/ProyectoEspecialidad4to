@@ -20,11 +20,27 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_estadistic = Ui_estadisticas_1.Ui_MainWindow() #facilita la coneccion con Ui_estadisticas_1
         self.ui_estadistic_2 = Ui_estadisticas_2.Ui_MainWindow() #facilita la coneccion con Ui_estadisticas_2
         self.setup_menu() #Inicia la pagina Menu
-        self.dia1 = Day_report([3600000, 11820000, 38700000, 48180000, 71880000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
-
+        self.dia1 = Day_report([3600000, 11820000, 32300000, 48660000, 70080000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
+        self.dia2 = Day_report([3900000, 13320000, 11100000, 42080000, 65980000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
+        self.dia3 = Day_report([4200000, 15320000, 32700000, 41080000, 57980000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
+        self.dia4 = Day_report([5000000, 16820000, 9400000, 48010000, 71710000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
+        self.dia5 = Day_report([5700000, 16720000, 129700000, 10180000, 30880000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
+        self.dia6 = Day_report([7000000, 11820000, 40000000, 42780000, 71880000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
+        self.dia7 = Day_report([7800000, 18420000, 43200000, 12180000, 71880000, 83520000], 10, [3630000, 9800000, 3890000, 1840000, 71800000, 83520000], 6 )
+        
+        self.arduino = comunicacion.conexion_arduino()
+        try:
+            while True:
+                if self.arduino.in_waiting > 0:  # Si hay datos disponibles para leer
+                    data = self.arduino.readline().decode('utf-8').strip()  # Lee y decodifica los datos
+                    print(f"Recibido: {data}")
+        except KeyboardInterrupt:
+            print("Finalizando...")
+        finally:
+            self.arduino.close()
 
         self.showFullScreen() #Adapta a pantalla completa
-        #self.arduino = comunicacion.conexion_arduino()
+        
 
     #Método que abre el Menu
     def setup_menu(self):
@@ -44,6 +60,7 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.ui_config.volver_boton.clicked.connect(self.volver) #Capta si el boton volver fue presionado para ejecutar la funcion volver
 
     def enviar_dato(self):
+        self.arduino = comunicacion.conexion_arduino()
         cg = self.ui_config # Crea un enlace de facil acceso 
         self.limites = [cg.lm_grl.value(), cg.lm_lu.value(), cg.lm_mt.value(), cg.lm_mc.value(), cg.lm_jv.value(), cg.lm_vn.value(), cg.lm_sb.value(), cg.lm_dg.value()]
 
@@ -82,10 +99,6 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
         self.lg_lm = str(len(comunicacion.convertir_matriz(self.matriz_datos, "limite")))
         self.lg_hr = str(len(comunicacion.convertir_matriz(self.matriz_datos, "horarios")))
 
-        self.mensaje = f"{comunicacion.miliseg_week()}, {self.lg_lm}, {self.lg_hr}" + ",".join(map(str, self.ard_lm)) + "," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos, "limite"))) + "," + ",".join(map(str, comunicacion.convertir_matriz(self.matriz_datos, "horarios")))
-
-        print(self.mensaje)
-        """
         self.arduino.write(comunicacion.miliseg_week())
         self.arduino.write((self.lg_lm))
         self.arduino.write((self.lg_hr))
@@ -93,7 +106,9 @@ class MainWindow(QMainWindow):  # Main window class inherited from QMainWindow
             self.arduino.write(f"{value}".encode()+b"\n")
 
         for value in comunicacion.convertir_matriz(self.matriz_datos, "horarios"):
-            self.arduino.write(f"{value}".encode()+b"\n")"""
+            self.arduino.write(f"{value}".encode()+b"\n")
+
+        
             
 
     #Metodo que obtiene datos de los archivos .json
