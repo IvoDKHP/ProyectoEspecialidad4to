@@ -40,12 +40,66 @@ const int motorPin1 = 13;
 const int motorPin2 = 12;
 const int parlante = 6;
 
-void agregarValor(int valor) {
+void agregarValor_lunes(int valor) {
   // Redimensionar el array para agregar un nuevo elemento
   horas_motor_lunes = (int*)realloc(horas_motor_lunes, (elementosActuales + 1) * sizeof(int));
   
   // Agregar el nuevo valor
   horas_motor_lunes[elementosActuales] = valor;
+
+  // Incrementar el contador de elementos
+  elementosActuales++;
+}
+
+void agregarValor_martes(int valor) {
+  // Redimensionar el array para agregar un nuevo elemento
+  horas_motor_martes = (int*)realloc(horas_motor_martes, (elementosActuales + 1) * sizeof(int));
+  
+  // Agregar el nuevo valor
+  horas_motor_martes[elementosActuales] = valor;
+
+}
+
+void agregarValor_miercoles(int valor) {
+  // Redimensionar el array para agregar un nuevo elemento
+  horas_motor_miercoles = (int*)realloc(horas_motor_miercoles, (elementosActuales + 1) * sizeof(int));
+  
+  // Agregar el nuevo valor
+  horas_motor_miercoles[elementosActuales] = valor;
+
+}
+
+void agregarValor_jueves(int valor) {
+  // Redimensionar el array para agregar un nuevo elemento
+  horas_motor_jueves = (int*)realloc(horas_motor_jueves, (elementosActuales + 1) * sizeof(int));
+  
+  // Agregar el nuevo valor
+  horas_motor_jueves[elementosActuales] = valor;
+}
+
+void agregarValor_viernes(int valor) {
+  // Redimensionar el array para agregar un nuevo elemento
+  horas_motor_viernes = (int*)realloc(horas_motor_viernes, (elementosActuales + 1) * sizeof(int));
+  
+  // Agregar el nuevo valor
+  horas_motor_viernes[elementosActuales] = valor;
+
+}
+
+void agregarValor_sabado(int valor) {
+  // Redimensionar el array para agregar un nuevo elemento
+  horas_motor_sabado = (int*)realloc(horas_motor_sabado, (elementosActuales + 1) * sizeof(int));
+  
+  // Agregar el nuevo valor
+  horas_motor_sabado[elementosActuales] = valor;
+}
+
+void agregarValor_domingo(int valor) {
+  // Redimensionar el array para agregar un nuevo elemento
+  horas_motor_domingo = (int*)realloc(horas_motor_domingo, (elementosActuales + 1) * sizeof(int));
+  
+  // Agregar el nuevo valor
+  horas_motor_domingo[elementosActuales] = valor;
 
   // Incrementar el contador de elementos
   elementosActuales++;
@@ -155,9 +209,52 @@ void loop() {
       }
     }
 
+    if(hora_actual < 86400000 * 7) {  // <-- Corregí la comparación con el número 86400000
+      if (horarios[iterame] < 86400000  * 7) {
+        horarios[iterame] = valor;
+        agregarValor_domingo(valor);  // <-- Corregí la llamada a la función
+      }
+    }
+
+    if(hora_actual < 86400000 * 6) {  // <-- Corregí la comparación con el número 86400000
+      if (horarios[iterame] < 86400000 * 6) {
+        horarios[iterame] = valor;
+        agregarValor_sabado(valor);  // <-- Corregí la llamada a la función
+      }
+    }
+    
+    if(hora_actual < 86400000 * 5) {  // <-- Corregí la comparación con el número 86400000
+      if (horarios[iterame] < 86400000 * 5) {
+        horarios[iterame] = valor;
+        agregarValor_viernes(valor);  // <-- Corregí la llamada a la función
+      }
+    }
+
+    if(hora_actual < 86400000 * 4) {  // <-- Corregí la comparación con el número 86400000
+      if (horarios[iterame] < 86400000 *4) {
+        horarios[iterame] = valor;
+        agregarValor_jueves(valor);  // <-- Corregí la llamada a la función
+      }
+    }
+
+    if(hora_actual < 86400000 * 3) {  // <-- Corregí la comparación con el número 86400000
+      if (horarios[iterame] < 86400000 * 3) {
+        horarios[iterame] = valor;
+        agregarValor_miercoles(valor);  // <-- Corregí la llamada a la función
+      }
+    }
+
+    if(hora_actual < 86400000 * 2) {  // <-- Corregí la comparación con el número 86400000
+      if (horarios[iterame] < 86400000* 2) {
+        horarios[iterame] = valor;
+        agregarValor_martes(valor);  // <-- Corregí la llamada a la función
+      }
+    }
+
     if(hora_actual < 86400000) {  // <-- Corregí la comparación con el número 86400000
       if (horarios[iterame] < 86400000) {
         horarios[iterame] = valor;
+        agregarValor_lunes(valor);  // <-- Corregí la llamada a la función
       }
     }
 
