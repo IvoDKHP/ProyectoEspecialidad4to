@@ -1,295 +1,369 @@
-// Variables globales
-unsigned long inicio_millis = 0;  // Tiempo inicial sincronizado
-int hora_actual = 0;  // <-- Se añadió el punto y coma
-
-// Variables de control
+unsigned long customMillis = 0; // Variable global para almacenar el valor inicial
+unsigned long offsetMillis = 0; // Diferencia entre millis() del Arduino y customMillis
+unsigned long minutos = 0;  // Convierte el tiempo a minutos
+bool time_millis = false; // Variables de control
+bool long_pa_tm = false;
+bool long_hr_tm = false;
+bool list1_tm = false;
+bool list2_tm = false;
+bool list3_tm = false;
+bool activacion = true;
+bool activation1 = true;
+int a = 1;
+int contador_on_off = 0;
+int contador_sensor_estats = 0;
 int contador_sensor = 0;  // Contador de activaciones del sensor
-int max_activaciones = 0; // Máximo de activaciones permitidas
-int limite_cantidad = 7;  // cantidad de datos del array limites
-int longitud_on_off;
-int longitud_horarios;
-int *limite;  // Puntero para el array 'limite'
-int *on_off;  // Puntero para el array 'on_off'
-int *horarios;  // Puntero para el array 'horarios'
-int iterame = 0; // para iterarse
-int iterame2 = 0;
-bool comida = true;
-int *horas_motor_lunes; // Punteros para los arrays de las horas del motor por día
-int *horas_motor_martes;
-int *horas_motor_miercoles;
-int *horas_motor_jueves;
-int *horas_motor_viernes;
-int *horas_motor_sabado;
-int *horas_motor_domingo;
-int elementosActuales = 0;  // <-- Corregido el punto y coma
-int valor = 0;  // <-- Corregido el punto y coma
-int dia = 0
-
+int long_pa = 1; // Largos preseteados
+int long_hr = 1;
+unsigned long lista_hora_sensor[100];
+unsigned long lista_contador_stats[50];
+unsigned long lista_contador[50];
+unsigned long list_pa[10]; // Listas
+unsigned long list_hr[10];
+int list_lm[10];
+int dato = 0; // Dato de control
+const int distanciaUmbral = 10; // Distancia umbral en cm
+const int distanciaUmbral2 = 6;
+// Pines de motores
+const int motorPin1 = 13;
+const int motorPin2 = 12;
 // Pines del sensor 1
 const int trigPin1 = 10;
 const int echoPin1 = 9;
-
 // Pines del sensor 2
 const int trigPin2 = 4;
 const int echoPin2 = 3;
-
-// Umbral de distancia en centímetros
-const int distanciaUmbral = 20;
-
-// Pines del motor y el parlante
-const int motorPin1 = 13;
-const int motorPin2 = 12;
+//pines del parlante
 const int parlante = 6;
+unsigned long tiempoActual = 0; // Declaración global de tiempoActual
+int currentSize = 0;  // Controlador para el tamaño actual del arreglo
+int currentSize1 = 0;
+int currentSize2 = 0;
 
-void agregarValor_lunes(int valor) {
-  // Redimensionar el array para agregar un nuevo elemento
-  horas_motor_lunes = (int*)realloc(horas_motor_lunes, (elementosActuales + 1) * sizeof(int));
-  
-  // Agregar el nuevo valor
-  horas_motor_lunes[elementosActuales] = valor;
-
-  // Incrementar el contador de elementos
-  elementosActuales++;
+void appendToList(int value) {
+  // Añadir el valor al arreglo
+  lista_contador_stats[currentSize] = value;
+  currentSize++;  // Aumentar el contador de elementos almacenados
+  Serial.print("Valor añadido: ");
+  Serial.println(value);
 }
 
-void agregarValor_martes(int valor) {
-  // Redimensionar el array para agregar un nuevo elemento
-  horas_motor_martes = (int*)realloc(horas_motor_martes, (elementosActuales + 1) * sizeof(int));
-  
-  // Agregar el nuevo valor
-  horas_motor_martes[elementosActuales] = valor;
-
+void appendToList1(int value) {
+  // Añadir el valor al arreglo
+  lista_hora_sensor[currentSize1] = value;
+  currentSize1++;  // Aumentar el contador de elementos almacenados
+  Serial.print("Valor añadido: ");
+  Serial.println(value);
 }
 
-void agregarValor_miercoles(int valor) {
-  // Redimensionar el array para agregar un nuevo elemento
-  horas_motor_miercoles = (int*)realloc(horas_motor_miercoles, (elementosActuales + 1) * sizeof(int));
-  
-  // Agregar el nuevo valor
-  horas_motor_miercoles[elementosActuales] = valor;
-
+void appendToList2(int value) {
+  // Añadir el valor al arreglo
+  lista_contador[currentSize2] = value;
+  currentSize2++;  // Aumentar el contador de elementos almacenados
+  Serial.print("Valor añadido: ");
+  Serial.println(value);
 }
 
-void agregarValor_jueves(int valor) {
-  // Redimensionar el array para agregar un nuevo elemento
-  horas_motor_jueves = (int*)realloc(horas_motor_jueves, (elementosActuales + 1) * sizeof(int));
-  
-  // Agregar el nuevo valor
-  horas_motor_jueves[elementosActuales] = valor;
-}
-
-void agregarValor_viernes(int valor) {
-  // Redimensionar el array para agregar un nuevo elemento
-  horas_motor_viernes = (int*)realloc(horas_motor_viernes, (elementosActuales + 1) * sizeof(int));
-  
-  // Agregar el nuevo valor
-  horas_motor_viernes[elementosActuales] = valor;
-
-}
-
-void agregarValor_sabado(int valor) {
-  // Redimensionar el array para agregar un nuevo elemento
-  horas_motor_sabado = (int*)realloc(horas_motor_sabado, (elementosActuales + 1) * sizeof(int));
-  
-  // Agregar el nuevo valor
-  horas_motor_sabado[elementosActuales] = valor;
-}
-
-void agregarValor_domingo(int valor) {
-  // Redimensionar el array para agregar un nuevo elemento
-  horas_motor_domingo = (int*)realloc(horas_motor_domingo, (elementosActuales + 1) * sizeof(int));
-  
-  // Agregar el nuevo valor
-  horas_motor_domingo[elementosActuales] = valor;
-
-  // Incrementar el contador de elementos
-  elementosActuales++;
-}
-
-void prender_parlante() {
-  digitalWrite(parlante, HIGH);
-  delay(1000);
-  digitalWrite(parlante, LOW);
-}
-
-void prender_motor() {
-  digitalWrite(motorPin1, HIGH);
-  digitalWrite(motorPin2, LOW);
-  delay(500);
-  digitalWrite(motorPin1, LOW);
-  digitalWrite(motorPin2, LOW);
-}
-
-void enviar_senial1() {
-  digitalWrite(trigPin1, LOW);
-  delayMicroseconds(2);
-  digitalWrite(trigPin1, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin1, LOW);
-  long duracion1 = pulseIn(echoPin1, HIGH);
-  int distancia1 = duracion1 * 0.034 / 2;
-  if (distancia1 > 0 && distancia1 <= distanciaUmbral) {
-    prender_motor();
-    if (contador_sensor < limite[dia]) {
-          contador_sensor = contador_sensor + 1
-    }
+void contador_reinicio() {
+  // Lunes
+  if (tiempoActual >= 0 && tiempoActual <= 1000) {
+    Serial.println("Reinicio: Lunes, reiniciando contador.");
+    appendToList2(contador_sensor);
+    contador_sensor = 0; 
+    appendToList(contador_sensor_estats);
+    contador_sensor_estats = 0;
+  }
+  // Martes
+  if (tiempoActual >= 86400000 && tiempoActual <= 86400000 + 1000) {
+    Serial.println("Reinicio: Martes, reiniciando contador.");
+    appendToList2(contador_sensor);
+    contador_sensor = 0;
+    appendToList(contador_sensor_estats);
+    contador_sensor_estats = 0;
+  }
+  // Miércoles
+  if (tiempoActual >= 86400000*2 && tiempoActual <= (86400000*2) + 1000) {
+    Serial.println("Reinicio: Miércoles, reiniciando contador.");
+    appendToList2(contador_sensor);
+    contador_sensor = 0;
+    appendToList(contador_sensor_estats);
+    contador_sensor_estats = 0;
+  }
+  // Jueves
+  if (tiempoActual >= 86400000*3 && tiempoActual <= (86400000*3) + 1000) {
+    Serial.println("Reinicio: Jueves, reiniciando contador.");
+    appendToList2(contador_sensor);
+    contador_sensor = 0;
+    appendToList(contador_sensor_estats);
+    contador_sensor_estats = 0;
+  }
+  // Viernes
+  if (tiempoActual >= 86400000*4 && tiempoActual <= (86400000*4) + 1000) {
+    Serial.println("Reinicio: Viernes, reiniciando contador.");
+    appendToList2(contador_sensor);
+    contador_sensor = 0;
+    appendToList(contador_sensor_estats);
+    contador_sensor_estats = 0;
+  }
+  // Sábado
+  if (tiempoActual >= 86400000*5 && tiempoActual <= (86400000*5) + 1000) {
+    Serial.println("Reinicio: Sábado, reiniciando contador.");
+    appendToList2(contador_sensor);
+    contador_sensor = 0;
+    appendToList(contador_sensor_estats);
+    contador_sensor_estats = 0;
+  }
+  // Domingo
+  if (tiempoActual >= 86400000*6 && tiempoActual <= (86400000*6) + 1000) {
+    Serial.println("Reinicio: Domingo, reiniciando contador.");
+    appendToList2(contador_sensor);
+    contador_sensor = 0;
+    appendToList(contador_sensor_estats);
+    contador_sensor_estats = 0;
   }
 }
 
-void enviar_senial2() {
+void activar_sensor2(){
   digitalWrite(trigPin2, LOW);
   delayMicroseconds(2);
   digitalWrite(trigPin2, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin2, LOW);
+
   long duracion2 = pulseIn(echoPin2, HIGH);
   int distancia2 = duracion2 * 0.034 / 2;
-  if (distancia2 == 0 || distancia2 == INFINITY || distancia2 > distanciaUmbral) {
+
+  if (distancia2 == 0 || distancia2 == INFINITY || distancia2 > distanciaUmbral2) {
+    Serial.println("Sensor 2 activado, distancia mayor que umbral.");
     prender_parlante();
-    comida = false;
+  }
+}
+
+void prender_parlante() {
+  Serial.println("Activando parlante.");
+  tone(parlante, 2000);
+  delay(500);
+  noTone(parlante);
+}
+
+void prender_motores() {
+  Serial.println("Motores activados.");
+  digitalWrite(motorPin1, HIGH);
+  digitalWrite(motorPin2, LOW);
+  delay(400);
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, LOW);
+}
+
+void activar_sensor1() {
+  // Evita comparar explícitamente con true
+  // Enviar pulso ultrasónico
+  digitalWrite(trigPin1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin1, LOW);
+
+  // Medir duración del eco
+  long duracion1 = pulseIn(echoPin1, HIGH);
+  int distancia1 = duracion1 * 0.034 / 2; // Convertir tiempo en distancia
+
+  // Comprobar si la distancia está dentro del umbral
+  if (distancia1 > 0 && distancia1 <= distanciaUmbral) {
+    contador_sensor_estats = contador_sensor_estats + 1;
+    if (activacion) {
+      appendToList1(minutos);
+      Serial.println("Sensor 1 activado, distancia dentro del umbral.");
+      prender_motores(); // Activar motores si la distancia es válida
+      contador_sensor = contador_sensor + 1; // Incrementar el contador
+    }
+  }
+}
+
+void recivir_valore() {
+  if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n');
+    input.trim();
+
+    if (!time_millis) {
+      unsigned long tiempo = input.toInt();
+      customMillis = tiempo;
+      offsetMillis = millis();
+      time_millis = true;
+      Serial.println("Recibiendo valor de tiempo.");
+    } else if (!long_pa_tm) {
+      long_pa = input.toInt();
+      long_pa_tm = true;
+      Serial.println("Configurando largo preseteado (long_pa).");
+    } else if (!long_hr_tm) {
+      long_hr = input.toInt();
+      long_hr_tm = true;
+      Serial.println("Configurando largo horario (long_hr).");
+    } else if (!list1_tm) {
+      for (int i = 0; i < long_pa; i++) {
+        dato = 0;
+        while (dato == 0) {
+          input = Serial.readStringUntil('\n');
+          input.trim();
+          dato = input.toInt();
+          if (dato == -2) {
+            dato = 0;
+            break;
+          }
+        }
+        list_pa[i] = dato;
+        Serial.print("Valor de list_pa[" + String(i) + "]: ");
+        Serial.println(list_pa[i]);
+      }
+      list1_tm = true;
+    } else if (!list2_tm) {
+      for (int i = 0; i < long_hr; i++) {
+        dato = 0;
+        while (dato == 0) {
+          input = Serial.readStringUntil('\n');
+          input.trim();
+          dato = input.toInt();
+          if (dato == -2) {
+            dato = 0;
+            break;
+          }
+        }
+        list_hr[i] = dato;
+        Serial.print("Valor de list_hr[" + String(i) + "]: ");
+        Serial.println(list_hr[i]);
+      }
+      list2_tm = true;
+    } else if (!list3_tm) {
+      for (int i = 0; i < 7; i++) {
+        dato = 0;
+        while (dato == 0) {
+          input = Serial.readStringUntil('\n');
+          input.trim();
+          dato = input.toInt();
+          if (dato == -2) {
+            dato = 0;
+            break;
+          }
+        }
+        list_lm[i] = dato;
+        Serial.print("Valor de list_lm[" + String(i) + "]: ");
+        Serial.println(list_lm[i]);
+      }
+      list3_tm = true;
+      delay(1000);
+      time_millis = false;
+      long_pa_tm = false;
+      long_hr_tm = false;
+      list1_tm = false;
+      list2_tm = false;
+      list3_tm = false;
+    }
+  }
+}
+
+void contador_sensro() {
+  //lunes
+  if (tiempoActual < 86400000) {
+    if (list_lm[0] == contador_sensor) {
+      activacion = false;
+      Serial.println("Sensor desactivado en lunes.");
+    } else {
+      activacion = true;
+      contador_reinicio();
+    }
+  } //martes
+  else if (tiempoActual > 86400000 && tiempoActual < 86400000 * 2 ) {
+    if (list_lm[1] == contador_sensor) {
+      activacion = false;
+      Serial.println("Sensor desactivado en martes.");
+    } else {
+      activacion = true;
+      contador_reinicio();
+    }
+  } //miercoles
+  else if (tiempoActual > 86400000*2 && tiempoActual < 86400000 * 3 ) {
+    if (list_lm[2] == contador_sensor) {
+      activacion = false;
+      Serial.println("Sensor desactivado en miércoles.");
+    } else {
+      activacion = true;
+      contador_reinicio();
+    }
+  } //jueves
+  else if (tiempoActual > 86400000*3 && tiempoActual < 86400000*4 ) {
+    if (list_lm[3] == contador_sensor) {
+      activacion = false;
+      Serial.println("Sensor desactivado en jueves.");
+    } else {
+      activacion = true;
+      contador_reinicio();
+    }
+  }//viernes
+  else if (tiempoActual > 86400000*4 && tiempoActual < 86400000*5 ) {
+    if (list_lm[4] == contador_sensor) {
+      activacion = false;
+      Serial.println("Sensor desactivado en viernes.");
+    } else {
+      activacion = true;
+      contador_reinicio();
+    }
+  }//sabado
+  else if (tiempoActual > 86400000*5 && tiempoActual < 86400000*6 ) {
+    if (list_lm[5] == contador_sensor) {
+      activacion = false;
+      Serial.println("Sensor desactivado en sábado.");
+    } else {
+      activacion = true;
+      contador_reinicio();
+    }
+  }//domingo
+  else if (tiempoActual > 86400000*6 && tiempoActual < 86400000*7 ) {
+    if (list_lm[6] == contador_sensor) {
+      activacion = false;
+      Serial.println("Sensor desactivado en domingo.");
+    } else {
+      activacion = true;
+      contador_reinicio();
+    }
   }
 }
 
 void setup() {
-  // Inicia la comunicación serial
-  Serial.begin(9600);
-
-  // Espera hasta que haya datos disponibles
-  while (!Serial) {
-    // Espera
-  }
-  if (Serial.available() > 0) {
-    String mensaje = Serial.readString();  // Lee el mensaje completo
-     if (mensaje == "CONEXION") {
-        Serial.println(horas_motor_lunes);
-        Serial.println(horas_motor_martes);
-        Serial.println(horas_motor_miercoles);
-        Serial.println(horas_motor_jueves);
-        Serial.println(horas_motor_viernes);
-        Serial.println(horas_motor_sabado);
-        Serial.println(horas_motor_domingo);
-        Serial.println(contador_sensor);
-     }
-  }
-  // Lee los primeros datos del serial
-  if (Serial.available() >= 6) {  // Verifica que haya al menos 6 bytes disponibles
-    hora_actual = Serial.parseInt();  // <-- Se corrigió la declaración de 'hora_actual'
-    longitud_on_off = Serial.parseInt();   // Recibe el tamaño del primer array
-    longitud_horarios = Serial.parseInt();   // Recibe el tamaño del segundo array
-
-    // Asigna memoria dinámica para los arrays
-    limite = new int[limite_cantidad];  // Tamaño fijo para 'limite'
-    on_off = new int[longitud_on_off];   // Tamaño recibido desde el serial para 'on_off'
-    horarios = new int[longitud_horarios];  // Tamaño recibido desde el serial para 'horarios'
-
-    // Leer los datos para el array 'limite'
-    for (int i = 0; i < limite_cantidad; i++) {
-      if (Serial.available() > 0) {
-        limite[i] = Serial.parseInt();  // Recibe el valor para el array 'limite'
-      }
-    }
-
-    // Leer los datos para el array 'on_off'
-    for (int i = 0; i < longitud_on_off; i++) {
-      if (Serial.available() > 0) {
-        on_off[i] = Serial.parseInt();  // Recibe el valor para el array 'on_off'
-      }
-    }
-
-    // Leer los datos para el array 'horarios'
-    for (int i = 0; i < longitud_horarios; i++) {
-      if (Serial.available() > 0) {
-        horarios[i] = Serial.parseInt();  // Recibe el valor para el array 'horarios'
-      }
-    }
-  }
-
-  // Configura los pines
-  pinMode(motorPin1, OUTPUT);
+  Serial.begin(9600); // Inicia la comunicación serial
+  pinMode(motorPin1, OUTPUT); // Pines motor
   pinMode(motorPin2, OUTPUT);
-  pinMode(parlante, OUTPUT);
-  pinMode(trigPin1, OUTPUT);
+  pinMode(trigPin1, OUTPUT); // Configurar pines del sensor 1
   pinMode(echoPin1, INPUT);
+  pinMode(trigPin2, OUTPUT); // Configurar pines sensor 2
   pinMode(echoPin2, INPUT);
-  pinMode(trigPin2, OUTPUT);
+  digitalWrite(motorPin1, LOW); // Apaga los pines del motor
+  digitalWrite(motorPin2, LOW);
+}
+
+void horas_comida() {
+  Serial.println(minutos);
+  for (int i = 0; i < long_hr; i++) { // Recorrer la lista hasta long_hr
+    if (minutos != 0) {
+      if (list_hr[i]  == minutos) { // Comparar cada elemento con 'minutos'
+        prender_motores(); // Llamar a la función si hay coincidencia
+        minutos +=1;
+        delay(60000);
+        break; // Salir del bucle al encontrar una coincidencia
+      }
+    }
+  }
+}
+
+void enviar_datos() {
 }
 
 void loop() {
-  while (comida) {
-    enviar_senial2();
-    if (hora_actual = 86400000 * 7) {
-      millis_inicio = 0
-      hora_actual = 0
-    }
-    if (hora_actual > on_off[iterame2]) {  // <-- Corregí el 'if'
-      iterame2 = iterame2 + 1;
-    } else if (hora_actual < on_off[iterame2]) {  // <-- Corregí el 'else if'
-      if (iterame2 % 2 == 1) {  // <-- Corregí el operador '==' y la sintaxis
-        enviar_senial1();
-      }
-    }
-
-    if(hora_actual < 86400000 * 7 && hora_actual > 86400000 * 6) {  // <-- Corregí la comparación con el número 86400000
-      dia = dia + 1 
-      if (horarios[iterame] < 86400000  * 7) {
-        horarios[iterame] = valor;
-        agregarValor_domingo(valor);  // <-- Corregí la llamada a la función
-      }
-    }
-
-    if(hora_actual < 86400000 * 6 && hora_actual > 86400000 * 5) {  // <-- Corregí la comparación con el número 86400000
-      dia = dia + 1 
-      if (horarios[iterame] < 86400000 * 6) {
-        horarios[iterame] = valor;
-        agregarValor_sabado(valor);  // <-- Corregí la llamada a la función
-      }
-    }
-    
-    if(hora_actual < 86400000 * 5 && hora_actual > 86400000 * 4) {  // <-- Corregí la comparación con el número 86400000
-      dia = dia + 1 
-      if (horarios[iterame] < 86400000 * 5) {
-        horarios[iterame] = valor;
-        agregarValor_viernes(valor);  // <-- Corregí la llamada a la función
-      }
-    }
-
-    if(hora_actual < 86400000 * 4 && hora_actual > 86400000 * 3) {  // <-- Corregí la comparación con el número 86400000
-      dia = dia + 1
-      if (horarios[iterame] < 86400000 *4) {
-        horarios[iterame] = valor;
-        agregarValor_jueves(valor);  // <-- Corregí la llamada a la función
-      }
-    }
-
-    if(hora_actual < 86400000 * 3 && hora_actual > 86400000 * 2) {  // <-- Corregí la comparación con el número 86400000
-      dia = dia + 1 
-      if (horarios[iterame] < 86400000 * 3) {
-        horarios[iterame] = valor;
-        agregarValor_miercoles(valor);  // <-- Corregí la llamada a la función
-      }
-    }
-
-    if(hora_actual < 86400000 * 2 && hora_actual > 86400000) { // <-- Corregí la comparación con el número 86400000
-      dia = dia + 1 
-      if (horarios[iterame] < 86400000* 2) {
-        horarios[iterame] = valor;
-        agregarValor_martes(valor);  // <-- Corregí la llamada a la función
-      }
-    }
-
-    if(hora_actual < 86400000) {
-      dia = 0  // <-- Corregí la comparación con el número 86400000
-      if (horarios[iterame] < 86400000) {
-        horarios[iterame] = valor;
-        agregarValor_lunes(valor);  // <-- Corregí la llamada a la función
-      }
-    }
-
-    if (hora_actual > horarios[iterame]) {  // <-- Corregí el nombre de la variable 'horario' a 'horarios'
-      iterame = iterame + 1;
-    } else if (hora_actual == horarios[iterame]) {  // <-- Corregí la comparación
-      prender_motor();
-      iterame = iterame + 1;
-    }
-  }
+  tiempoActual = customMillis + (millis() - offsetMillis); // Actualización del tiempo
+  minutos = tiempoActual / 60000;  // Convierte el tiempo a minutos
+  recivir_valore();
+  horas_comida();
+  contador_sensro();
+  activar_sensor1();
+  activar_sensor2();
+  delay(1000); // Esperar 1 segundo antes de la siguiente iteración
 }

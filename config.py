@@ -23,3 +23,10 @@ def organizar_horarios(matriz):
         nueva_matriz.append(fila_ordenada) #Agrega la lista ordenada a la nueva matriz
 
     return nueva_matriz  # Devolver la nueva matriz ya ordenada
+
+def organizar_limites(limites):
+    lista = limites
+    for i in range(1, len(lista)):
+        lista[i] += lista[0]
+
+    return lista

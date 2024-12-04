@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
         self.frame_4.setObjectName("frame_4")
         self.estadistic_boton = QtWidgets.QPushButton(self.frame_4)
         self.estadistic_boton.setEnabled(True)
-        self.estadistic_boton.setGeometry(QtCore.QRect(40, 90, 655, 130))
+        self.estadistic_boton.setGeometry(QtCore.QRect(190, 170, 655, 130))
         self.estadistic_boton.setStyleSheet("QPushButton {\n"
 "    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
 "    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
         self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_5.setObjectName("frame_5")
         self.config_boton = QtWidgets.QPushButton(self.frame_5)
-        self.config_boton.setGeometry(QtCore.QRect(48, 85, 650, 130))
+        self.config_boton.setGeometry(QtCore.QRect(200, 90, 650, 130))
         self.config_boton.setStyleSheet("QPushButton {\n"
 "    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
 "    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
@@ -119,18 +119,50 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setStretch(1, 25)
         self.horizontalLayout_3.setStretch(2, 10)
         self.verticalLayout.addWidget(self.Configuracion_frame)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem5)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem5)
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.frame = QtWidgets.QFrame(self.Fondo)
+        self.frame.setStyleSheet("QFrame{\n"
+"    background: transparent;\n"
+"}")
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.salir_boton = QtWidgets.QPushButton(self.frame)
+        self.salir_boton.setGeometry(QtCore.QRect(100, 0, 111, 41))
+        self.salir_boton.setStyleSheet("QPushButton {\n"
+"    background-color: blue;  /* Cambia \'green\' al color que prefieras */\n"
+"    color: white;  /* Cambia \'white\' al color del texto que prefieras */\n"
+"border rad\n"
+"}\n"
+"QPushButton { border-radius: 20px; /* Ajusta el valor para hacer el botón más o menos redondeado / background-color: #3498db; / Color de fondo del botón / color: white; / Color del texto del botón / border: 12px solid #2980b9; / Borde del botón */ }")
+        self.salir_boton.setObjectName("config_boton_2")
+        self.verticalLayout_4.addWidget(self.frame)
+        self.horizontalLayout_4.addLayout(self.verticalLayout_4)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem6)
+        self.horizontalLayout_4.setStretch(0, 25)
+        self.horizontalLayout_4.setStretch(1, 10)
+        self.horizontalLayout_4.setStretch(2, 25)
+        self.verticalLayout.addLayout(self.horizontalLayout_4)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem7)
         self.verticalLayout.setStretch(0, 5)
         self.verticalLayout.setStretch(1, 5)
         self.verticalLayout.setStretch(2, 5)
-        self.verticalLayout.setStretch(3, 2)
+        self.verticalLayout.setStretch(3, 1)
+        self.verticalLayout.setStretch(4, 2)
         self.horizontalLayout.addWidget(self.Fondo)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         self.estadistic_boton.clicked.connect(MainWindow.show_estadistic) # type: ignore
         self.config_boton.clicked.connect(MainWindow.show_config) # type: ignore
+        self.salir_boton.clicked.connect(MainWindow.cerrar_app) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -138,3 +170,14 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.estadistic_boton.setText(_translate("MainWindow", "Estadísticas"))
         self.config_boton.setText(_translate("MainWindow", "Configuración"))
+        self.salir_boton.setText(_translate("MainWindow", "Salir"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
